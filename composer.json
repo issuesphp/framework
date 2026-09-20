@@ -1,0 +1,17 @@
+{
+	"name": "issuesphp/framework",
+	"description": "core a simple PHP framework that helps solve problems.",
+	"license": "MIT",
+	"keywords": [
+		"framework",
+		"issuesphp"
+	],
+	"authors": [
+		{
+			"name": "jonathan castro",
+			"email": "joncastdev@gmail.com"
+		}
+	],
+	"require": {}
+}
+
