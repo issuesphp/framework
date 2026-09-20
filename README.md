@@ -2,11 +2,19 @@
 
 Core a simple PHP framework that helps solve problems
 
+
+
 ## About
 
 - Follow red socials:
-    - YouTube: **[youtube.com/@joncastdev](https://youtube.com/@issuesphp)** — Videos every week
-    
+
+- YouTube: **[youtube.com/@issuesphp](https://youtube.com/@issuesphp)** — Videos every week
+
+## Installation
+
+```bash
+$ composer require issuesphp/framework
+``` 
 
 ## Author ✒️
 
