@@ -13,13 +13,15 @@ int main() {
 
 	char option[50];
 
-	std::string base = "base_table.php";
+	// std::string base = "base_table.php";
 
 
 	// strcpy(option, "Options");
 
 
-	printf("Choice Option: \n");
+	// printf("Type a number and press enter: \n");
+
+	 std::cout << "Type a number and press enter: \n" << std::endl;
 
 	scanf("%d", &myNum);
 
@@ -46,12 +48,18 @@ int main() {
 
 		scanf("%49s", option);
 
-		if (strcmp(option, "customers") == 0)
+		// if (strcmp(option, "customers") == 0)
+		if (option != NULL)
 		{
-			// std::string base = "base_table.php";
-		// std::string endpoint = baseUrl + segment;	
+			std::string basePath = "database/migrations/";
+			std::string extensionPath = "_table.php";
+			std::string finalPath = basePath + option + extensionPath;
 
-		FILE *file = fopen("database/migrations/base_table.php", "w");		
+			// std::cout << finalPath << std::endl;
+
+			FILE *file = fopen(finalPath.c_str(), "w");			
+
+			// FILE *file = fopen("database/migrations/base_table.php", "w");		
 
 		// FILE *file = fopen("database/migrations/" + option.c_str() + "_table.php", "w");
 
