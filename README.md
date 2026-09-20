@@ -3,18 +3,18 @@
 Core a simple PHP framework that helps solve problems
 
 
+## Installation
+
+```bash
+$ composer require issuesphp/framework
+```
 
 ## About
 
 - Follow red socials:
 
 - YouTube: **[youtube.com/@issuesphp](https://youtube.com/@issuesphp)** — Videos every week
-
-## Installation
-
-```bash
-$ composer require issuesphp/framework
-``` 
+ 
 
 ## Author ✒️
 
