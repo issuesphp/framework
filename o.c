@@ -7,73 +7,61 @@
 
 #include <iostream>
 
+struct option {
+	int myNum;
+	char comandName[50];
+};
+
+struct migration {
+	int myNum;
+	char migrationName[50];
+};
+
 int main() {
 
-	int myNum;
+	struct option op;
 
-	char option[50];
+	struct migration mi;
 
-	// std::string base = "base_table.php";
+	// int myNum;
 
+	// char option[50];
 
-	// strcpy(option, "Options");
+	// op.comandName
 
+	
 
-	// printf("Type a number and press enter: \n");
+	std::cout << "Type a command and press enter: \n" << std::endl;
 
-	 std::cout << "Type a number and press enter: \n" << std::endl;
+	// printf("Type a number: \n");
 
-	scanf("%d", &myNum);
+	// scanf("%d", &myNum);
 
-	// scanf("%s", &option);
+	scanf("%49s", op.comandName);
 
-	//leemos 48 characters
-	// scanf("%49s", option);
-
-// Output the number the user typed
-	// printf("Your number is: %d", myNum);
-
-	switch (myNum) {
-		// no se puede usar string con switch 
-	// case 'issuesphp:serve':
-	case 1:
-		// printf("Your number is: %d\n", myNum);
-
+	if (strcmp(op.comandName, "issuesphp:serve") == 0)
+	{
 		system("php -S localhost:8080");
+	}
 
-		break;
-	case 2:
+	if (strcmp(op.comandName, "issuesphp:make:migration") == 0)
+	{
 
 		printf("Choice Option: \n");
 
-		scanf("%49s", option);
+		scanf("%49s", mi.migrationName);
 
-		// if (strcmp(option, "customers") == 0)
-		if (option != NULL)
+		if (mi.migrationName != NULL)
 		{
 			std::string basePath = "database/migrations/";
 			std::string extensionPath = "_table.php";
-			std::string finalPath = basePath + option + extensionPath;
+			std::string finalPath = basePath + mi.migrationName + extensionPath;			
 
-			// std::cout << finalPath << std::endl;
-
-			FILE *file = fopen(finalPath.c_str(), "w");			
-
-			// FILE *file = fopen("database/migrations/base_table.php", "w");		
-
-		// FILE *file = fopen("database/migrations/" + option.c_str() + "_table.php", "w");
-
-			// FILE *file = fopen("database/migrations/" + base, "w");
+			FILE *file = fopen(finalPath.c_str(), "w");		
 		}
+		
+	}
 
-
-
-		break;
-	default:
-		printf("Choose an option from the list");
-
-		return -1;
-	}	
 	
 
 	
