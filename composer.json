@@ -1,6 +1,6 @@
 {
 	"name": "issuesphp/framework",
-	"description": "core a simple PHP framework that helps solve problems.",
+	"description": "A simple PHP framework that helps solve problems in software development.",
 	"license": "MIT",
 	"keywords": [
 		"framework",
