@@ -1,6 +1,6 @@
 ## Introduction
 
-Core a simple PHP framework that helps solve problems
+A simple PHP framework that helps solve problems in software development.
 
 
 ## Installation

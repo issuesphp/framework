@@ -23,6 +23,9 @@ int main() {
 
 	struct migration mi;
 
+	char buffer[1024];
+    size_t bytesLeidos;
+
 	// int myNum;
 
 	// char option[50];
@@ -57,7 +60,22 @@ int main() {
 			std::string extensionPath = "_table.php";
 			std::string finalPath = basePath + mi.migrationName + extensionPath;			
 
-			FILE *file = fopen(finalPath.c_str(), "w");		
+			FILE *fileCreate = fopen(finalPath.c_str(), "w");
+			// FILE *file = fopen(finalPath.c_str(), "wb");
+
+			//rb e ecritura
+			FILE *fileOrigin = fopen("vendor/Issues/Database/Clone/Migrations/migration.php", "rb");
+
+			FILE *fileDestiny = fopen(finalPath.c_str(), "wb");
+
+			  // Copiar bloque por bloque
+			while ((bytesLeidos = fread(buffer, 1, sizeof(buffer), fileOrigin)) > 0) {
+				fwrite(buffer, 1, bytesLeidos, fileDestiny);
+			}
+
+    // Cerrar los archivos
+			fclose(fileOrigin);
+			fclose(fileDestiny);			
 		}
 		
 	}
