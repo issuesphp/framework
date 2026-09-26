@@ -9,6 +9,54 @@
 
 #include <mysql.h>
 
+void dropTable(std::string host,std::string username,std::string password,std::string database,std::string migrationName ) {
+
+	MYSQL *conn;
+	MYSQL_RES *res;
+	MYSQL_ROW row;
+
+	// int id;
+
+	// std::string id;
+
+	std::string name;
+
+	// char name;
+
+	conn = mysql_init(NULL);
+
+	if (!mysql_real_connect(conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), 0, NULL, 0)) {
+		fprintf(stderr, "%s\n", mysql_error(conn));
+		// return 1;
+	}
+
+	// if (!mysql_real_connect(conn, "localhost", "jonathan", "123", "apruebas", 0, NULL, 0)) {
+	// 	fprintf(stderr, "%s\n", mysql_error(conn));
+	// 	// return 1;
+	// }
+
+	std::string baseQuery = "DROP TABLE IF EXISTS ";
+	// std::string endpoint = migrationName;
+	std::string query = baseQuery + migrationName;
+	
+
+	// std::string query = "DROP TABLE IF EXISTS users";	
+
+
+	if (mysql_query(conn, query.c_str())) {
+		fprintf(stderr, "%s\n", mysql_error(conn));
+        // return 1;
+	}
+
+	res = mysql_store_result(conn);   
+
+
+	mysql_free_result(res);
+	mysql_close(conn);   
+
+}
+
+
 void createTable() {
 
 	MYSQL *conn;
@@ -71,6 +119,16 @@ struct option {
 	int migrationRowQuantity[50];
 };
 
+struct database {
+	int myNum;
+	int id;
+	// char migrationName[50];
+	char databaseHost[50];
+	char databaseUsername[50];
+	char databasePassword[50];
+	char databaseName[50];	
+};
+
 struct migration {
 	int myNum;
 	int id;
@@ -84,6 +142,8 @@ int main() {
 	struct option op;
 
 	struct migration mi;
+
+	struct database da;
 
 	char buffer[1024];
 	size_t bytesLeidos;
@@ -149,6 +209,46 @@ int main() {
 		
 	}
 
+	//end
+
+	if (strcmp(op.comandName, "issuesphp:drop:one:migration") == 0)
+	{
+
+		scanf("%49s", da.databaseHost);
+
+		printf("Your number is: %s", da.databaseHost);
+
+		scanf("%49s", da.databaseUsername);
+
+		printf("Your number is: %s", da.databaseUsername);
+
+		scanf("%49s", da.databasePassword);
+
+		printf("Your number is: %s", da.databasePassword);
+
+		scanf("%49s", da.databaseName);
+
+		printf("Your number is: %s", da.databaseName);
+
+		// migratioon		
+
+		scanf("%49s", op.migrationName);
+
+		printf("Your number is: %s", op.migrationName);		
+
+		if (op.migrationName != NULL)
+		{
+
+			dropTable(da.databaseHost,da.databaseUsername,da.databasePassword,da.databaseName,op.migrationName);
+
+			
+		}		
+
+	}
+
+	//end
+
+
 	//otro
 	if (strcmp(op.comandName, "issuesphp:make:push:migration") == 0)
 	{
@@ -178,6 +278,8 @@ int main() {
 		}		
 
 	}
+
+	//end
 
 
 
