@@ -36,9 +36,9 @@ struct migration {
 	char migrationTypeName[50];
 };
 
-	MYSQL *conn;
-	MYSQL_RES *res;
-	MYSQL_ROW row;	
+MYSQL *conn;
+MYSQL_RES *res;
+MYSQL_ROW row;	
 
 	// conn = mysql_init(NULL);
 
@@ -57,6 +57,55 @@ void connection(std::string host,std::string username,std::string password,std::
 
 
 	res = mysql_store_result(conn);	
+
+}
+
+void createTable(std::string migrationName, std::string migrationRowName,std::string migrationTypeName) {	
+	
+	std::string baseQuery = "CREATE TABLE IF NOT EXISTS ";
+	std::string baseRow = "(id integer primary key,";
+	// std::string seperator = ",";
+	std::string space = " ";
+	std::string baseRowEnd = ")";
+	std::string query = baseQuery + migrationName + baseRow + migrationRowName + space + migrationTypeName + baseRowEnd;
+	// std::string query = baseQuery + migrationName + baseRow + seperator + migrationRowName + migrationTypeName + baseRowEnd;
+
+
+	// std::string query = "CREATE TABLE IF NOT EXISTS users(id integer,name char)";
+ // std::string s0 = "DROP DATABASE IF NOT EXISTS `users`";
+// std::string s0 = "CREATE TABLE IF NOT EXISTS `user`(`userID` INT AUTO_INCREMENT ,`name` varchar(100) NOT NULL, PRIMARY KEY(`userID`));";
+
+
+	if (mysql_query(conn, query.c_str())) {
+		fprintf(stderr, "%s\n", mysql_error(conn));
+        // return 1;
+	}
+
+	res = mysql_store_result(conn);    
+
+
+	mysql_free_result(res);
+	
+
+}
+
+void dropTable(std::string migrationName) {
+
+	
+	std::string baseQuery = "DROP TABLE IF EXISTS ";
+	std::string query = baseQuery + migrationName;
+
+
+	if (mysql_query(conn, query.c_str())) {
+		fprintf(stderr, "%s\n", mysql_error(conn));
+        // return 1;
+	}
+
+	res = mysql_store_result(conn);   
+
+
+	mysql_free_result(res);
+	// mysql_close(conn);   
 
 }
 
@@ -105,7 +154,7 @@ int main() {
 
 		
 
-		 connection(da.databaseHost,da.databaseUsername,da.databasePassword,da.databaseName);
+		connection(da.databaseHost,da.databaseUsername,da.databasePassword,da.databaseName);
 
 
 
@@ -123,22 +172,46 @@ int main() {
 			if (op.migrationName != NULL)
 			{
 
-				// dropTable(op.migrationName,conn);
+				dropTable(op.migrationName);
 
-				std::string baseQuery = "DROP TABLE IF EXISTS ";
-				std::string query = baseQuery + op.migrationName;
-
-
-				if (mysql_query(conn, query.c_str())) {
-					fprintf(stderr, "%s\n", mysql_error(conn));
-        // return 1;
-				}
-
-				res = mysql_store_result(conn);   
+		// 		std::string baseQuery = "DROP TABLE IF EXISTS ";
+		// 		std::string query = baseQuery + op.migrationName;
 
 
-				mysql_free_result(res);
+		// 		if (mysql_query(conn, query.c_str())) {
+		// 			fprintf(stderr, "%s\n", mysql_error(conn));
+        // // return 1;
+		// 		}
 
+		// 		res = mysql_store_result(conn);   
+
+
+		// 		mysql_free_result(res);
+
+
+			}
+
+		}
+		// end
+		if (strcmp(op.comandName, "issuesphp:make:push:migration") == 0)
+		{
+
+			scanf("%49s", op.migrationName);
+
+			printf("Answer: %s\n", op.migrationName);
+
+			scanf("%49s", mi.migrationRowName);
+
+			printf("Answer: %s\n", mi.migrationRowName);
+
+			scanf("%49s", mi.migrationTypeName);
+
+			printf("Answer: %s\n", mi.migrationTypeName);
+
+			if (op.migrationName != NULL)
+			{
+
+				createTable(op.migrationName,mi.migrationRowName,mi.migrationTypeName);
 
 			}
 
