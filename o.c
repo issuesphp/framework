@@ -9,110 +9,9 @@
 
 #include <mysql.h>
 
-void dropTable(std::string host,std::string username,std::string password,std::string database,std::string migrationName ) {
-
-	MYSQL *conn;
-	MYSQL_RES *res;
-	MYSQL_ROW row;
-
-	// int id;
-
-	// std::string id;
-
-	std::string name;
-
-	// char name;
-
-	conn = mysql_init(NULL);
-
-	if (!mysql_real_connect(conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), 0, NULL, 0)) {
-		fprintf(stderr, "%s\n", mysql_error(conn));
-		// return 1;
-	}
-
-	// if (!mysql_real_connect(conn, "localhost", "jonathan", "123", "apruebas", 0, NULL, 0)) {
-	// 	fprintf(stderr, "%s\n", mysql_error(conn));
-	// 	// return 1;
-	// }
-
-	std::string baseQuery = "DROP TABLE IF EXISTS ";
-	// std::string endpoint = migrationName;
-	std::string query = baseQuery + migrationName;
-	
-
-	// std::string query = "DROP TABLE IF EXISTS users";	
-
-
-	if (mysql_query(conn, query.c_str())) {
-		fprintf(stderr, "%s\n", mysql_error(conn));
-        // return 1;
-	}
-
-	res = mysql_store_result(conn);   
-
-
-	mysql_free_result(res);
-	mysql_close(conn);   
-
-}
-
-
-void createTable() {
-
-	MYSQL *conn;
-	MYSQL_RES *res;
-	MYSQL_ROW row;
-
-	// int id;
-
-	// std::string id;
-
-	std::string name;
-
-	// char name;
-
-	conn = mysql_init(NULL);
-
-	if (!mysql_real_connect(conn, "localhost", "jonathan", "123", "apruebas", 0, NULL, 0)) {
-		fprintf(stderr, "%s\n", mysql_error(conn));
-		// return 1;
-	}
-
-	//   if (mysql_query(conn, "SELECT id, character_name FROM characters")) {
-    //     fprintf(stderr, "%s\n", mysql_error(conn));
-    //     // return 1;
-    // }
-
-	// std::string query = "DROP TABLE IF EXISTS users";
-	std::string query = "CREATE TABLE IF NOT EXISTS users(id integer,name char)";
- // std::string s0 = "DROP DATABASE IF NOT EXISTS `users`";
-// std::string s0 = "CREATE TABLE IF NOT EXISTS `user`(`userID` INT AUTO_INCREMENT ,`name` varchar(100) NOT NULL, PRIMARY KEY(`userID`));";
-
-
-	if (mysql_query(conn, query.c_str())) {
-		fprintf(stderr, "%s\n", mysql_error(conn));
-        // return 1;
-	}
-
-	res = mysql_store_result(conn);
-
-    // ejemplo con row
-    // while ((row = mysql_fetch_row(res)) != NULL) {
-    //     printf("ID: %s, Character_name: %s\n", row[0], row[1]);
-    // }   
-
-
-	mysql_free_result(res);
-	mysql_close(conn);
-    // return 0;
-
-    // no se puede usar return por que corta el script
-       // return 0;
-
-}
-
 struct option {
 	int myNum;
+	char question;
 	char comandName[50];
 	char migrationName[50];
 	// char migrationQuantity[50];
@@ -137,8 +36,35 @@ struct migration {
 	char migrationTypeName[50];
 };
 
+	MYSQL *conn;
+	MYSQL_RES *res;
+	MYSQL_ROW row;	
+
+	// conn = mysql_init(NULL);
+
+void connection(std::string host,std::string username,std::string password,std::string database) {
+
+	// MYSQL *conn;
+	// MYSQL_RES *res;
+	// MYSQL_ROW row;	
+
+	conn = mysql_init(NULL);
+
+	if (!mysql_real_connect(conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), 0, NULL, 0)) {
+		fprintf(stderr, "%s\n", mysql_error(conn));
+		// return 1;
+	}
+
+
+	res = mysql_store_result(conn);	
+
+}
+
+
+
 int main() {
 
+	struct option nivel1;
 	struct option op;
 
 	struct migration mi;
@@ -146,143 +72,87 @@ int main() {
 	struct database da;
 
 	char buffer[1024];
-	size_t bytesLeidos;
-
-	// MYSQL *conn;
-	// MYSQL_RES *res;
-	// MYSQL_ROW row;
-
-	// conn = mysql_init(NULL);
+	size_t bytesLeidos;	
 
 
-	// int myNum;
+	std::cout << "Connect Database an press y / n: \n" << std::endl;
 
-	// char option[50];
+	scanf("%c", &nivel1.question);
 
-	// op.comandName
+	// printf("Answer: %c\n", nivel1.question);
 
-	
+	// printf("Answer: %c\n", nivel1.question);
 
-	std::cout << "Type a command and press enter: \n" << std::endl;
-
-	// printf("Type a number: \n");
-
-	// scanf("%d", &myNum);
-
-	scanf("%49s", op.comandName);
-
-	if (strcmp(op.comandName, "issuesphp:serve") == 0)
-	{
-		system("php -S localhost:8080");
-	}
-
-	if (strcmp(op.comandName, "issuesphp:make:migration") == 0)
-	{
-
-		printf("Choice Option: \n");
-
-		scanf("%49s", op.migrationName);
-
-		if (op.migrationName != NULL)
-		{
-			std::string basePath = "database/migrations/";
-			std::string extensionPath = "_table.php";
-			std::string finalPath = basePath + op.migrationName + extensionPath;			
-
-			FILE *fileCreate = fopen(finalPath.c_str(), "w");
-			// FILE *file = fopen(finalPath.c_str(), "wb");
-
-			//rb e ecritura
-			FILE *fileOrigin = fopen("core/Issues/Database/Clone/Migrations/migration.php", "rb");
-
-			FILE *fileDestiny = fopen(finalPath.c_str(), "wb");
-
-			  // Copiar bloque por bloque
-			while ((bytesLeidos = fread(buffer, 1, sizeof(buffer), fileOrigin)) > 0) {
-				fwrite(buffer, 1, bytesLeidos, fileDestiny);
-			}
-
-    // Cerrar los archivos
-			fclose(fileOrigin);
-			fclose(fileDestiny);			
-		}
-		
-	}
-
-	//end
-
-	if (strcmp(op.comandName, "issuesphp:drop:one:migration") == 0)
-	{
+	switch (nivel1.question) {
+	case 'y':
+		// printf("Role Admin: %c\n", roles[0]);
 
 		scanf("%49s", da.databaseHost);
 
-		printf("Your number is: %s", da.databaseHost);
+		printf("Answer: %s\n", da.databaseHost);
 
 		scanf("%49s", da.databaseUsername);
 
-		printf("Your number is: %s", da.databaseUsername);
+		printf("Answer: %s\n", da.databaseUsername);
 
 		scanf("%49s", da.databasePassword);
 
-		printf("Your number is: %s", da.databasePassword);
+		printf("Answer: %s\n", da.databasePassword);
 
 		scanf("%49s", da.databaseName);
 
-		printf("Your number is: %s", da.databaseName);
+		printf("Answer: %s\n", da.databaseName);
 
-		// migratioon		
+		
 
-		scanf("%49s", op.migrationName);
+		 connection(da.databaseHost,da.databaseUsername,da.databasePassword,da.databaseName);
 
-		printf("Your number is: %s", op.migrationName);		
 
-		if (op.migrationName != NULL)
+
+		scanf("%49s", op.comandName);
+
+		printf("Answer: %s\n", op.comandName);
+
+		if (strcmp(op.comandName, "issuesphp:drop:one:migration") == 0)
 		{
 
-			dropTable(da.databaseHost,da.databaseUsername,da.databasePassword,da.databaseName,op.migrationName);
+			scanf("%49s", op.migrationName);
 
-			
-		}		
+			printf("Answer: %s\n", op.migrationName);
 
+			if (op.migrationName != NULL)
+			{
+
+				// dropTable(op.migrationName,conn);
+
+				std::string baseQuery = "DROP TABLE IF EXISTS ";
+				std::string query = baseQuery + op.migrationName;
+
+
+				if (mysql_query(conn, query.c_str())) {
+					fprintf(stderr, "%s\n", mysql_error(conn));
+        // return 1;
+				}
+
+				res = mysql_store_result(conn);   
+
+
+				mysql_free_result(res);
+
+
+			}
+
+		}
+		// end
+
+
+		break;
+	case 'n':
+		// printf("Role User: %c\n", roles[1]);
+		break;
+	default:
+		printf("No options: \n");
 	}
-
-	//end
-
-
-	//otro
-	if (strcmp(op.comandName, "issuesphp:make:push:migration") == 0)
-	{
-
-		printf("Migration Name Option: \n");
-
-		scanf("%49s", op.migrationName);
-
-		printf("Row Quantity Option: \n");
-
-		scanf("%d", op.migrationRowQuantity);
-
-		printf("Row Name Option: \n");
-
-		scanf("%49s", mi.migrationRowName);
-
-		printf("Type Name Option: \n");
-
-		scanf("%49s", mi.migrationTypeName);
-
-		if (op.migrationName != NULL)
-		{
-
-			createTable();
-
-			
-		}		
-
-	}
-
-	//end
-
-
-
 
 
 
