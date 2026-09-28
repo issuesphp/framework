@@ -12,16 +12,27 @@ class MainController
 
     echo $result;  
 
- }
+  }
 
- public function view($fileName,array $params = null)
- {
+  public function view($fileName,array $params = null)
+  {
 
-  $result = shell_exec('php resources/views/'.$fileName.'.php');
+    $result = shell_exec('php resources/views/'.$fileName.'.php');
 
-  echo $result;  
+    if (empty($result)) {
 
-}       
+     header("HTTP/1.1 404 Not Found");
+     echo "404 - Sorry, the landing page does not exist.";
+
+    }else{
+
+      echo $result;  
+    }   
+
+   
+
+  }       
 
 }
+
 
