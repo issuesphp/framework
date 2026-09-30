@@ -1,4 +1,9 @@
-/* esta es la libreria */
+/* 
+  Author: Jonathan Castro
+  Email: joncastdev@gmail.com
+  Script: Commanline IssuesPHP Framework  
+*/
+
 #include <stdio.h>
 
 #include <string.h>
@@ -14,6 +19,7 @@ struct option {
 	char question;
 	char comandName[50];
 	char migrationName[50];
+	char seedName[50];
 	// char migrationQuantity[50];
 	int migrationRowQuantity[50];
 };
@@ -34,6 +40,14 @@ struct migration {
 	// char migrationName[50];
 	char migrationRowName[50];
 	char migrationTypeName[50];
+};
+
+struct seed {
+	int myNum;
+	int id;
+	// char migrationName[50];
+	char seedRowName[50];
+	char seedRowValue[50];
 };
 
 MYSQL *conn;
@@ -63,7 +77,8 @@ void connection(std::string host,std::string username,std::string password,std::
 void createTable(std::string migrationName, std::string migrationRowName,std::string migrationTypeName) {	
 	
 	std::string baseQuery = "CREATE TABLE IF NOT EXISTS ";
-	std::string baseRow = "(id integer primary key,";
+	// std::string baseRow = "(id int AUTO_INCREMENT PRIMARY KEY,";
+	std::string baseRow = "(id integer PRIMARY KEY,";
 	// std::string seperator = ",";
 	std::string space = " ";
 	std::string baseRowEnd = ")";
@@ -109,6 +124,30 @@ void dropTable(std::string migrationName) {
 
 }
 
+void insertTable(std::string seedName, std::string seedRowName,std::string seedRowValue) {	
+	
+	std::string baseQuery = "INSERT INTO ";
+	std::string baseRow = "(";
+	// std::string seperator = ",";
+	std::string valuesName = "values(";
+	// std::string space = " ";
+	std::string baseRowEnd = ")";
+	std::string query = baseQuery + seedName + baseRow + seedRowName + baseRowEnd + valuesName + seedRowValue + baseRowEnd;
+	
+
+	if (mysql_query(conn, query.c_str())) {
+		fprintf(stderr, "%s\n", mysql_error(conn));
+        // return 1;
+	}
+
+	res = mysql_store_result(conn);    
+
+
+	mysql_free_result(res);
+	
+
+}
+
 
 
 int main() {
@@ -117,6 +156,8 @@ int main() {
 	struct option op;
 
 	struct migration mi;
+
+	struct seed se;
 
 	struct database da;
 
@@ -218,10 +259,50 @@ int main() {
 		}
 		// end
 
+		if (strcmp(op.comandName, "issuesphp:db:seed:one") == 0)
+		{
+
+			scanf("%49s", op.seedName);
+
+			printf("Answer: %s\n", op.seedName);
+
+			// scanf("%49s", mi.migrationName);
+
+			// printf("Answer: %s\n", mi.migrationName);
+
+			scanf("%49s", se.seedRowName);
+
+			printf("Answer: %s\n", se.seedRowName);
+
+			scanf("%49s", se.seedRowValue);
+
+			printf("Answer: %s\n", se.seedRowValue);
+
+			if (op.seedName != NULL)
+			{
+
+				insertTable(op.seedName,se.seedRowName,se.seedRowValue);
+
+			}
+
+		}
+		// end
+
 
 		break;
 	case 'n':
-		// printf("Role User: %c\n", roles[1]);
+
+		scanf("%49s", op.comandName);
+
+		// printf("Answer: %s\n", op.comandName);		
+
+		if (strcmp(op.comandName, "issuesphp:serve") == 0)
+		{
+
+			system("php -S localhost:8080");
+
+		}
+		// end
 		break;
 	default:
 		printf("No options: \n");
