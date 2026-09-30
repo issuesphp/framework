@@ -19,10 +19,12 @@ class MainController
 
     $result = shell_exec('php resources/views/'.$fileName.'.php');
 
+    $error = shell_exec('php resources/views/errors/error_404.php');
+
     if (empty($result)) {
 
      header("HTTP/1.1 404 Not Found");
-     echo "404 - Sorry, the landing page does not exist.";
+     echo $error;
 
     }else{
 
