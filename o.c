@@ -1,4 +1,9 @@
-/* esta es la libreria */
+/* 
+  Author: Jonathan Castro
+  Email: joncastdev@gmail.com
+  Script: Commanline IssuesPHP Framework  
+*/
+
 #include <stdio.h>
 
 #include <string.h>
@@ -14,6 +19,9 @@ struct option {
 	char question;
 	char comandName[50];
 	char migrationName[50];
+	char controllerName[50];
+	char displayName[50];
+	char seedName[50];
 	// char migrationQuantity[50];
 	int migrationRowQuantity[50];
 };
@@ -36,6 +44,14 @@ struct migration {
 	char migrationTypeName[50];
 };
 
+struct seed {
+	int myNum;
+	int id;
+	// char migrationName[50];
+	char seedRowName[50];
+	char seedRowValue[50];
+};
+
 MYSQL *conn;
 MYSQL_RES *res;
 MYSQL_ROW row;	
@@ -56,14 +72,17 @@ void connection(std::string host,std::string username,std::string password,std::
 	}
 
 
-	res = mysql_store_result(conn);	
+	res = mysql_store_result(conn);
+
+	std::cout << "Connection: " << res << std::endl;	
 
 }
 
 void createTable(std::string migrationName, std::string migrationRowName,std::string migrationTypeName) {	
 	
 	std::string baseQuery = "CREATE TABLE IF NOT EXISTS ";
-	std::string baseRow = "(id integer primary key,";
+	// std::string baseRow = "(id int AUTO_INCREMENT PRIMARY KEY,";
+	std::string baseRow = "(id integer AUTO_INCREMENT PRIMARY KEY,";
 	// std::string seperator = ",";
 	std::string space = " ";
 	std::string baseRowEnd = ")";
@@ -85,6 +104,8 @@ void createTable(std::string migrationName, std::string migrationRowName,std::st
 
 
 	mysql_free_result(res);
+
+	std::cout << "Migration Create: " << res << std::endl;	
 	
 
 }
@@ -105,7 +126,39 @@ void dropTable(std::string migrationName) {
 
 
 	mysql_free_result(res);
-	// mysql_close(conn);   
+	// mysql_close(conn);
+
+	std::cout << "Migration Drop: " << res << std::endl;	   
+
+}
+
+void insertTable(std::string seedName, std::string seedRowName,std::string seedRowValue) {	
+	
+	std::string baseQuery = "INSERT INTO ";
+	std::string baseRow = " (";
+	// std::string seperator = ",";
+	std::string valuesName = " VALUES (";
+	std::string separator1 = "'";
+	std::string separator2 = "'";
+	std::string baseRowEnd = ")";
+
+	// std::string query = "INSERT INTO states (category) VALUES ('a')";
+	std::string query = baseQuery + seedName + baseRow + seedRowName + baseRowEnd + valuesName + separator1 + seedRowValue + separator2 + baseRowEnd;
+
+	std::cout << "Query: " << query << std::endl;	
+
+	if (mysql_query(conn, query.c_str())) {
+		fprintf(stderr, "%s\n", mysql_error(conn));
+        // return 1;
+	}
+
+	res = mysql_store_result(conn);  
+
+
+	mysql_free_result(res);
+
+	std::cout << "DB Seed: " << res << std::endl;	
+	
 
 }
 
@@ -117,6 +170,8 @@ int main() {
 	struct option op;
 
 	struct migration mi;
+
+	struct seed se;
 
 	struct database da;
 
@@ -218,10 +273,80 @@ int main() {
 		}
 		// end
 
+		if (strcmp(op.comandName, "issuesphp:db:seed:one") == 0)
+		{
+
+			scanf("%49s", op.seedName);
+
+			printf("Answer: %s\n", op.seedName);
+
+			// scanf("%49s", mi.migrationName);
+
+			// printf("Answer: %s\n", mi.migrationName);
+
+			scanf("%49s", se.seedRowName);
+
+			printf("Answer: %s\n", se.seedRowName);
+
+			scanf("%49s", se.seedRowValue);
+
+			printf("Answer: %s\n", se.seedRowValue);
+
+			if (op.seedName != NULL)
+			{
+
+				insertTable(op.seedName,se.seedRowName,se.seedRowValue);
+
+			}
+
+		}
+		// end
+
 
 		break;
 	case 'n':
-		// printf("Role User: %c\n", roles[1]);
+
+		scanf("%49s", op.comandName);
+
+		// printf("Answer: %s\n", op.comandName);		
+
+		if (strcmp(op.comandName, "issuesphp:serve") == 0)
+		{
+
+			system("php -S localhost:8080");
+
+		}
+		// end
+
+		// scanf("%49s", op.comandName);
+
+		scanf("%49s", op.controllerName);
+
+		scanf("%49s", op.displayName);
+
+		// printf("Answer: %s\n", op.comandName);		
+
+		if (strcmp(op.comandName, "issuesphp:make:controller:display") == 0)
+		{
+
+			std::string basePath = "app/Http/Controllers/";
+			std::string extensionPath = ".php";
+			std::string finalPath = basePath + op.controllerName + extensionPath;
+
+			// std::cout << finalPath << std::endl;
+
+			FILE *file = fopen(finalPath.c_str(), "w");
+
+			std::string basePath1 = "app/Http/Displays/";
+			std::string extensionPath1 = ".php";
+			std::string finalPath1 = basePath1 + op.displayName + extensionPath1;
+
+			// std::cout << finalPath << std::endl;
+
+			FILE *file1 = fopen(finalPath1.c_str(), "w");		
+
+		}
+		// end
 		break;
 	default:
 		printf("No options: \n");
