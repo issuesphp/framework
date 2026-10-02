@@ -2,6 +2,10 @@
 
 A simple PHP framework that helps solve problems in software development.
 
+## Documentation
+
+The IssuesPHP Framework manual is available at [blog/docs](https://issuesphp.blogspot.com/p/issuesphp.html).
+
 
 ## Installation
 

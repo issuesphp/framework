@@ -1,5 +1,5 @@
 <?php
 
-define('ISSUESPHP_VERSION', 'v1.0.6');
+define('ISSUESPHP_VERSION', 'v1.0.8');
 
 ?>
