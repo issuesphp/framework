@@ -2,18 +2,34 @@
 
 namespace Issues\Model;
 
+use Issues\Model\ConnectionInterface;
+
 require __DIR__ . '../../../config/Database.php';
 
+include 'ConnectionInterface.php';
 
-class MainModel  
+
+class MainModel implements ConnectionInterface  
 {
 
 	public $conn;
 
-	public static function getAll($tableName)
-	{ 	
 
-		$conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+	function __construct()
+	{
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+
+		error_reporting(E_ALL);
+
+	}	
+	
+	public static function get($tableName)
+	{ 
+
+
+
+		$conn = MainModel::getConnection();
 
 		// $sql = "SELECT * FROM users";
 		$sql = "SELECT * FROM ".$tableName;
@@ -22,22 +38,60 @@ class MainModel
 
 		// $result = mysqli_query($this->conn, $sql);
 
-		return $result;
-
-// Process the result set
+		// Process the result set
 		if (mysqli_num_rows($result) > 0) {
-  // Output data of each row
-			while($row = mysqli_fetch_assoc($result)) {
-				// echo "email: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
-				// echo "email: " . $row["email"];
-				return $row["email"];
-			}
+
+			$row = mysqli_fetch_assoc($result);
+
+			return $row;
+
 		} else {
 			echo "0 results";
 		}
 
-		mysqli_close($this->conn);
+		// return $result;
+
+
 
 	}
-			
+
+	public static function find($tableName, $id)
+	{ 		
+
+		$conn = MainModel::getConnection();
+
+		$sql = "SELECT * FROM ".$tableName." WHERE id=".$id;		
+
+// Execute the SQL query
+		$result = mysqli_query($conn, $sql);
+
+
+	// Process the result set
+		if (mysqli_num_rows($result) > 0) {
+
+			$row = mysqli_fetch_assoc($result);
+
+			return $row;
+
+		} else {
+			echo "0 results";
+		}
+
+		// return $result;
+	}
+
+	public static function getConnection()
+	{ 		
+
+		$connec = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+
+		// Check connection
+		if (!$connec) {
+			die("Connection failed: " . mysqli_connect_error());
+		}
+		// echo "Connected successfully";
+
+		return $connec;		
+
+	}			
 }
