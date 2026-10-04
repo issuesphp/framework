@@ -1,49 +1,26 @@
 <?php
 
-// namespace App\Models;
-
 namespace Issues\Model;
 
+require __DIR__ . '../../../config/Database.php';
 
-use config\Connection;
 
-// include 'MainController.php';
+class MainModel  
+{
 
-// include 'MainModel.php';
+	public $conn;
 
-// include 'Models/User.php';
-
-   // include '../app/Http/Controllers/UserController.php';
-
-include __DIR__ . '../../../config/connection.php';
-
-// use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Illuminate\Database\Eloquent\Model;
-
-// class User extends Model
-class MainModel 
-{	
-
-	// public static function test()
-	public function test()
-	{ 
-
-		echo "test";
-
-	}	
 	public static function getAll($tableName)
-	{ 
+	{ 	
 
-		$conn = Connection::getConnection();
-
-		// return $conn; 
-
-		// $conn = mysqli_connect('localhost', 'jonathan', '123', 'foroworkers');
+		$conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
 		// $sql = "SELECT * FROM users";
 		$sql = "SELECT * FROM ".$tableName;
 // Execute the SQL query
 		$result = mysqli_query($conn, $sql);
+
+		// $result = mysqli_query($this->conn, $sql);
 
 		return $result;
 
@@ -59,7 +36,8 @@ class MainModel
 			echo "0 results";
 		}
 
-		mysqli_close($conn);
+		mysqli_close($this->conn);
 
-	}		
+	}
+			
 }
