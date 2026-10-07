@@ -11,7 +11,7 @@
 
 // }
 
-function routeResp($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null) {
+function routeGet($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null) {
 
 	// print_r($ccontrollerName);
 	// print_r($param1);

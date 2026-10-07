@@ -3,7 +3,7 @@
 namespace Issues\Controller\Request;
 
 
-class MainController 
+class IpController 
 {
 
 
