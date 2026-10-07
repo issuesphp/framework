@@ -1,5 +1,7 @@
 <?php
 
+namespace Issues\Display\Routes;
+
 // function routeResp($ccontrollerName , $mmethodName ) {
 
 
@@ -11,7 +13,13 @@
 
 // }
 
-function routeGet($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null) {
+class Route 
+{
+
+
+public static function get($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null) {
+
+	// echo "a";
 
 	// print_r($ccontrollerName);
 	// print_r($param1);
@@ -53,16 +61,23 @@ function routeGet($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 
 
 		if (file_exists($controllerFile)&&file_exists($displayFile) && $param1 !=null) {
 
+			// echo "aqui";
+
 				// $param = escapeshellarg($param1);
 
 			$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php param1='.$param1);
 
-			echo $result;	
+			echo $result;
+			// return $result; 	
 
 		} elseif (file_exists($controllerFile)&&file_exists($displayFile)) {
 
+			 // echo "aqui";
+
 			$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php');
-			echo $result;	
+			echo $result;
+
+			// return $result; 	
 
 		} else {
 
@@ -121,6 +136,7 @@ function routeGet($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 
 		header("HTTP/1.1 404 Not Found");
 		// $error = shell_exec('php resources/views/errors/error_404.php');
 		// echo $error;
+		// return $error; 
 		//exit elimina el duplicado de la vista
 		// pero no se ejecuta la segunda funcion
 		// exit;	
@@ -136,13 +152,15 @@ function routeGet($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 
 	
 }
 
-function routeInit() {
+public static function init() {
 
 	$result = shell_exec('php app/Http/Displays/welcome/index.php');
 
 	echo $result;
 
 	
+}
+
 }
 
 
