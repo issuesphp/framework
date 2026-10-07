@@ -9,7 +9,7 @@ require __DIR__ . '../../../config/Database.php';
 include 'ConnectionInterface.php';
 
 
-class MainModel implements ConnectionInterface  
+class IpModel implements ConnectionInterface  
 {
 
 	public $conn;
@@ -24,12 +24,12 @@ class MainModel implements ConnectionInterface
 
 	}	
 	
-	public static function get($tableName)
+	public static function chosenAll($tableName)
 	{ 
 
 
 
-		$conn = MainModel::getConnection();
+		$conn = IpModel::getConnection();
 
 		// $sql = "SELECT * FROM users";
 		$sql = "SELECT * FROM ".$tableName;
@@ -55,10 +55,10 @@ class MainModel implements ConnectionInterface
 
 	}
 
-	public static function find($tableName, $id)
+	public static function chosenOne($tableName, $id)
 	{ 		
 
-		$conn = MainModel::getConnection();
+		$conn = IpModel::getConnection();
 
 		$sql = "SELECT * FROM ".$tableName." WHERE id=".$id;		
 
