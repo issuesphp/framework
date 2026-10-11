@@ -19,10 +19,12 @@ class IpModel implements ConnectionInterface
 
 	function __construct()
 	{
-		ini_set('display_errors', 1);
-		ini_set('display_startup_errors', 1);
+		// ini_set('display_errors', 1);
+		// ini_set('display_startup_errors', 1);
 
-		error_reporting(E_ALL);		
+		// error_reporting(E_ALL);
+
+		return $this->getDebug(APP_STATE);		
 
 	}		
 
@@ -36,7 +38,7 @@ class IpModel implements ConnectionInterface
 
 		// $conn = IpModel::getConnection();
 
-		$conn = self::getConnection();
+		$conn = self::getConnection($dbNumber);
 
 		// $conn = $this->getConnection();
 
@@ -82,7 +84,7 @@ class IpModel implements ConnectionInterface
 
 		// $conn = IpModel::getConnection();
 
-		$conn = self::getConnection();
+		$conn = self::getConnection($dbNumber);
 
 		// $sql = "SELECT * FROM users";
 		$sql = "SELECT * FROM ".$tableName." WHERE id=".$id;
@@ -121,7 +123,7 @@ class IpModel implements ConnectionInterface
 
 		// $conn = IpModel::getConnection();
 
-		$conn = self::getConnection();
+		$conn = self::getConnection($dbNumber);
 
 		// $sql = "SELECT * FROM users";
 		$sql = "SELECT * FROM ".$tableName." WHERE id=".$id;
@@ -154,11 +156,38 @@ class IpModel implements ConnectionInterface
 		}
 
 	}
+
+	public static function slipk($tableName, $id,$dbNumber = null)
+	{ 
+
+		
+
+		// $conn = IpModel::getConnection();
+
+		$conn = self::getConnection($dbNumber);
+
+		// $sql = "SELECT * FROM users";
+		$sql = "DELETE FROM ".$tableName." WHERE id=".$id;			
+
+		$result = $conn->query($sql);
+
+		// if (empty($result)) {
+
+		// 	// echo "0 results";
+		// 	header("HTTP/1.1 404 Not Found");
+		// 	$error = shell_exec('php resources/views/errors/error_404_querys.php');
+		// 	echo $error;
+
+		// } 
+
+
+
+	}
 	
 
 	
 
-	public static function getConnection()
+	public static function getConnection($dbNumber = null)
 	// public function getConnection5()
 	{ 
 
@@ -166,7 +195,7 @@ class IpModel implements ConnectionInterface
 		switch (DB_DRIVER) {
 			case "mysql":
 
-			switch (DB_NUMBER) {
+			switch ($dbNumber) {
 				case 1:
 
 				$conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
@@ -176,7 +205,7 @@ class IpModel implements ConnectionInterface
 				break;		
 				case 2:	
 
-				$conn = self::getPdo2(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+				$conn = self::getPdo(DB_SECOND_HOST, DB_SECOND_DATABASE, DB_SECOND_USERNAME, DB_SECOND_PASSWORD);
 
 				return $conn;	
 
@@ -255,22 +284,24 @@ class IpModel implements ConnectionInterface
 
 	}
 
-	public static function getpdo2($servername, $dbname, $username, $password) 
+	public function getDebug($appState) 
 	{
 
 		// echo "test";
 
-		try {
-			$connec = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+		if ($appState = 'development') {
 
-			$connec->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				// echo "Connected successfully";
+			ini_set('display_errors', 1);
+			ini_set('display_startup_errors', 1);
 
-			return $connec;	
+			error_reporting(E_ALL);	
 
-		} catch(PDOException $e) {
-			echo "Connection failed: " . $e->getMessage();
-		}	
+		} else {
+			
+			ini_set('display_errors', 0);
+			ini_set('display_startup_errors', 0);
+
+		}		
 
 
 	}    							
