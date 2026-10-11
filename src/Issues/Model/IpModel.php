@@ -8,6 +8,8 @@ require __DIR__ . '../../../config/Database.php';
 
 include 'ConnectionInterface.php';
 
+use PDO;
+
 
 class IpModel implements ConnectionInterface  
 {
@@ -20,90 +22,67 @@ class IpModel implements ConnectionInterface
 		ini_set('display_errors', 1);
 		ini_set('display_startup_errors', 1);
 
-		error_reporting(E_ALL);
+		error_reporting(E_ALL);		
 
-	}	
+	}		
 
-	// public static function test()
-	public function test()
+	public static function chosenAll($tableName,$dbNumber = null)
 	{ 
 
-		echo "test";
+		// echo "a";
 
-	}	
-	public static function chosenAll($tableName)
-	{ 
-
-		// echo HOST;
-
-		// print_r($this->conn);
-
-		// exit; 
-
-		// // return $conn; 
-
-		// // echo "s";
-
-		// // exit;
-
-		// // $conn = Connection::getConnection();
-
-		// $conn = Connection::getConnection($host, $username, $password, $database);
+		// exit;
 
 
+		// $conn = IpModel::getConnection();
 
-		// return $conn; 
+		$conn = self::getConnection();
 
-		// $conn = mysqli_connect('localhost', 'jonathan', '123', 'foroworkers');
+		// $conn = $this->getConnection();
 
-		// $this->conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-
-		// $conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-
-		$conn = IpModel::getConnection();
+		// $conn = $this->conn;
 
 		// $sql = "SELECT * FROM users";
 		$sql = "SELECT * FROM ".$tableName;
 // Execute the SQL query
-		$result = mysqli_query($conn, $sql);
+		// $result = mysqli_query($conn, $sql);
+
+		$result = $conn->query($sql);
+
 
 		// $result = mysqli_query($this->conn, $sql);
 
 		// Process the result set
-		if (mysqli_num_rows($result) > 0) {
+		if ($result->rowCount() > 0) {
 
-			$row = mysqli_fetch_assoc($result);
+			// $row = $result->fetch();
+
+			// $row = $result->setFetchMode(PDO::FETCH_NUM);
+
+			$row = $result->fetch(\PDO::FETCH_OBJ);
+
+			// return $result->setFetchMode(PDO::FETCH_NUM);
 
 			return $row;
-  
+
 		} else {
+
 			// echo "0 results";
-		}
 
-		// return $result;
+		}	
 
-// Process the result set
-// 		if (mysqli_num_rows($result) > 0) {
-  // // Output data of each row
-// 			while($row = mysqli_fetch_assoc($result)) {
-// 				// echo "email: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
-// 				// echo "email: " . $row["email"];
-// 				return $row["email"];
-// 			}
-// 		} else {
-// 			echo "0 results";
-// 		}
 
-// 		mysqli_close($this->conn);
 
 	}
 
-	public static function chosenOne($tableName, $id)
+	public static function chosenOne($tableName, $id,$dbNumber = null)
 	{ 
 
 		
 
-		$conn = IpModel::getConnection();
+		// $conn = IpModel::getConnection();
+
+		$conn = self::getConnection();
 
 		// $sql = "SELECT * FROM users";
 		$sql = "SELECT * FROM ".$tableName." WHERE id=".$id;
@@ -111,42 +90,38 @@ class IpModel implements ConnectionInterface
 		// $sql = "SELECT id, firstname, lastname FROM MyGuests WHERE lastname='Doe'";
 
 // Execute the SQL query
-		$result = mysqli_query($conn, $sql);
+		// $result = mysqli_query($conn, $sql);
 
+		$result = $conn->query($sql);
 
-	// Process the result set
-		if (mysqli_num_rows($result) > 0) {
+		// $result = mysqli_query($this->conn, $sql);
 
-			$row = mysqli_fetch_assoc($result);
+		if ($result->rowCount() > 0) {
+
+			// $row = $result->fetch();
+
+			$row = $result->fetch(\PDO::FETCH_OBJ);
 
 			return $row;
-  
+
 		} else {
+
 			// echo "0 results";
+			
 		}
 
-		// return $result;
 
-	// Process the result set
-// 		if (mysqli_num_rows($result) > 0) {
-  // // Output data of each row
-// 			while($row = mysqli_fetch_assoc($result)) {
-// 				echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
-// 			}
-// 		} else {
-// 			echo "0 results";
-// 		}
-
-// 		mysqli_close($conn);
 
 	}
 
-	public static function chosenOrLost($tableName, $id)
+	public static function chosenOrLost($tableName, $id,$dbNumber = null)
 	{ 
 
 		
 
-		$conn = IpModel::getConnection();
+		// $conn = IpModel::getConnection();
+
+		$conn = self::getConnection();
 
 		// $sql = "SELECT * FROM users";
 		$sql = "SELECT * FROM ".$tableName." WHERE id=".$id;
@@ -154,85 +129,149 @@ class IpModel implements ConnectionInterface
 		// $sql = "SELECT id, firstname, lastname FROM MyGuests WHERE lastname='Doe'";
 
 // Execute the SQL query
-		$result = mysqli_query($conn, $sql);
+		// $result = mysqli_query($conn, $sql);
 
+		$result = $conn->query($sql);
 
-	// Process the result set
-		if (mysqli_num_rows($result) > 0) {
+		// $result = mysqli_query($this->conn, $sql);
 
-			$row = mysqli_fetch_assoc($result);
+		// Process the result set
+		if ($result->rowCount() > 0) {
+
+			// $row = $result->fetch();
+
+			$row = $result->fetch(\PDO::FETCH_OBJ);
 
 			return $row;
-  
+
 		} else {
+
 			// echo "0 results";
 			header("HTTP/1.1 404 Not Found");
-		$error = shell_exec('php resources/views/errors/error_404_querys.php');
-		echo $error;
+			$error = shell_exec('php resources/views/errors/error_404_querys.php');
+			echo $error;
+			
 		}
 
-		// return $result;
+	}
+	
 
-	// Process the result set
-// 		if (mysqli_num_rows($result) > 0) {
-  // // Output data of each row
-// 			while($row = mysqli_fetch_assoc($result)) {
-// 				echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
-// 			}
-// 		} else {
-// 			echo "0 results";
-// 		}
+	
 
-// 		mysqli_close($conn);
+	public static function getConnection()
+	// public function getConnection5()
+	{ 
+
+
+		switch (DB_DRIVER) {
+			case "mysql":
+
+			switch (DB_NUMBER) {
+				case 1:
+
+				$conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+
+				return $conn;
+				
+				break;		
+				case 2:	
+
+				$conn = self::getPdo2(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+
+				return $conn;	
+
+				break;
+
+				default:
+
+				// echo "Limit Connection";
+
+				$conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+
+				return $conn;							
+			}
+
+			
+			// $conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+
+			// return $conn;			
+
+
+			break;		
+			case "mysqli":	
+
+			echo "mysqli";
+
+			// $connec = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+
+			// if (!$connec) {
+			// 	die("Connection failed: " . mysqli_connect_error());
+			// }
+
+
+			// return $connec;
+
+			break;
+
+			case "pgsql":	
+
+			echo "pgsql";	
+
+			break;
+
+			case "sqlite":	
+
+			echo "sqlite";	
+
+			break;
+			default:
+
+			echo "No driver Found";							
+		}
+
+
+
+		
 
 	}
 
-	public static function getConnection()
-	{ 
+	public static function getpdo($servername, $dbname, $username, $password) 
+	{
 
-		// ini_set('display_errors', 1);
-		// ini_set('display_startup_errors', 1);
+		// echo "test";
 
-		// error_reporting(E_ALL);
+		try {
+			$connec = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
-		// echo HOST;
+			$connec->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				// echo "Connected successfully";
 
-		// exit;
+			return $connec;	
 
-		$connec = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+		} catch(PDOException $e) {
+			echo "Connection failed: " . $e->getMessage();
+		}	
 
-		// Check connection
-		if (!$connec) {
-			die("Connection failed: " . mysqli_connect_error());
-		}
-		// echo "Connected successfully";
 
-		return $connec;
+	}
 
-		// if (empty($connec)) {
+	public static function getpdo2($servername, $dbname, $username, $password) 
+	{
 
-		// 	// $connec = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-		// 	// return $connec;
-		// 	die("Connection failed: " . mysqli_connect_error());
+		// echo "test";
 
-		// } else {
+		try {
+			$connec = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
-		// 	die("Connection failed: " . mysqli_connect_error());
+			$connec->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				// echo "Connected successfully";
 
-		// }
-		
+			return $connec;	
 
-		// // Check connection
-		// if (!$conn) {
-		// 	die("Connection failed: " . mysqli_connect_error());
-		// }else
-		// echo "Connected successfully";
+		} catch(PDOException $e) {
+			echo "Connection failed: " . $e->getMessage();
+		}	
 
-		// return $connec;
 
-		// exit; 
-
-		
-
-	}			
+	}    							
 }
