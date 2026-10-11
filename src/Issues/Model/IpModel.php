@@ -20,11 +20,11 @@ class IpModel implements ConnectionInterface
 		ini_set('display_errors', 1);
 		ini_set('display_startup_errors', 1);
 
-		error_reporting(E_ALL);
+		error_reporting(E_ALL);		
 
 	}		
 
-	public static function chosenAll($tableName)
+	public static function chosenAll($tableName,$dbNumber = null)
 	{ 
 
 		// echo "a";
@@ -32,7 +32,13 @@ class IpModel implements ConnectionInterface
 		// exit;
 
 
-		$conn = IpModel::getConnection();
+		// $conn = IpModel::getConnection();
+
+		$conn = self::getConnection();
+
+		// $conn = $this->getConnection();
+
+		// $conn = $this->conn;
 
 		// $sql = "SELECT * FROM users";
 		$sql = "SELECT * FROM ".$tableName;
@@ -49,7 +55,11 @@ class IpModel implements ConnectionInterface
 
 			// $row = $result->fetch();
 
-			$row = $result->setFetchMode(PDO::FETCH_NUM);
+			// $row = $result->setFetchMode(PDO::FETCH_NUM);
+
+			$row = $result->fetch(\PDO::FETCH_OBJ);
+
+			// return $result->setFetchMode(PDO::FETCH_NUM);
 
 			return $row;
 
@@ -63,12 +73,14 @@ class IpModel implements ConnectionInterface
 
 	}
 
-	public static function chosenOne($tableName, $id)
+	public static function chosenOne($tableName, $id,$dbNumber = null)
 	{ 
 
 		
 
-		$conn = IpModel::getConnection();
+		// $conn = IpModel::getConnection();
+
+		$conn = self::getConnection();
 
 		// $sql = "SELECT * FROM users";
 		$sql = "SELECT * FROM ".$tableName." WHERE id=".$id;
@@ -84,7 +96,9 @@ class IpModel implements ConnectionInterface
 
 		if ($result->rowCount() > 0) {
 
-			$row = $result->fetch();
+			// $row = $result->fetch();
+
+			$row = $result->fetch(\PDO::FETCH_OBJ);
 
 			return $row;
 
@@ -98,12 +112,14 @@ class IpModel implements ConnectionInterface
 
 	}
 
-	public static function chosenOrLost($tableName, $id)
+	public static function chosenOrLost($tableName, $id,$dbNumber = null)
 	{ 
 
 		
 
-		$conn = IpModel::getConnection();
+		// $conn = IpModel::getConnection();
+
+		$conn = self::getConnection();
 
 		// $sql = "SELECT * FROM users";
 		$sql = "SELECT * FROM ".$tableName." WHERE id=".$id;
@@ -120,7 +136,9 @@ class IpModel implements ConnectionInterface
 		// Process the result set
 		if ($result->rowCount() > 0) {
 
-			$row = $result->fetch();
+			// $row = $result->fetch();
+
+			$row = $result->fetch(\PDO::FETCH_OBJ);
 
 			return $row;
 
@@ -139,35 +157,43 @@ class IpModel implements ConnectionInterface
 	
 
 	public static function getConnection()
+	// public function getConnection5()
 	{ 
 
 
 		switch (DB_DRIVER) {
 			case "mysql":
 
-			// echo "aqui";
-			// exit;
+			switch (DB_NUMBER) {
+				case 1:
 
-			$servername = DB_HOST;
+				$conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
 
-			$username = DB_USERNAME;
-
-			$password = DB_PASSWORD;
-
-			$dbname = DB_DATABASE;
-
-			try {
-				$connec = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-
-				$connec->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				// echo "Connected successfully";
-
-				return $connec;	
-
-			} catch(PDOException $e) {
-				echo "Connection failed: " . $e->getMessage();
-			}			
+				return $conn;
 				
+				break;		
+				case 2:	
+
+				$conn = self::getPdo2(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+
+				return $conn;	
+
+				break;
+
+				default:
+
+				// echo "Limit Connection";
+
+				$conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+
+				return $conn;							
+			}
+
+			
+			// $conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+
+			// return $conn;			
+
 
 			break;		
 			case "mysqli":	
@@ -201,9 +227,49 @@ class IpModel implements ConnectionInterface
 			echo "No driver Found";							
 		}
 
-			
+
 
 		
 
-	}							
+	}
+
+	public static function getpdo($servername, $dbname, $username, $password) 
+	{
+
+		// echo "test";
+
+		try {
+			$connec = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+
+			$connec->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				// echo "Connected successfully";
+
+			return $connec;	
+
+		} catch(PDOException $e) {
+			echo "Connection failed: " . $e->getMessage();
+		}	
+
+
+	}
+
+	public static function getpdo2($servername, $dbname, $username, $password) 
+	{
+
+		// echo "test";
+
+		try {
+			$connec = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+
+			$connec->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				// echo "Connected successfully";
+
+			return $connec;	
+
+		} catch(PDOException $e) {
+			echo "Connection failed: " . $e->getMessage();
+		}	
+
+
+	}    							
 }
