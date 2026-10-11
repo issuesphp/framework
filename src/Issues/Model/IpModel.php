@@ -8,6 +8,8 @@ require __DIR__ . '../../../config/Database.php';
 
 include 'ConnectionInterface.php';
 
+use PDO;
+
 
 class IpModel implements ConnectionInterface  
 {
