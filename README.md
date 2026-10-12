@@ -17,7 +17,6 @@ $ composer require issuesphp/framework
 
 - Find us at:
 - YouTube: **[youtube.com/@issuesphp](https://youtube.com/@issuesphp)** — Videos every week
-- Reddit: **[reddit.com/r/issuesphpframework/](https://www.reddit.com/r/issuesphpframework/)** — News
 - Stackoverflow: **[stackoverflow.com/users/33186023/issuesphp](https://stackoverflow.com/users/33186023/issuesphp)** — QA
 - Medium: **[medium.com/@issuesphp](https://medium.com/@issuesphp)** — Tutorials
 - Dev: **[dev.to/issuesphp](https://dev.to/issuesphp)** — Tutorials
@@ -27,6 +26,7 @@ $ composer require issuesphp/framework
 ## We appreciate
 
 - We thank all the collaborators who have contributed to this project in any way:
+
 - Stackoverflow: **[es.stackoverflow.com/users/16228/sal](https://es.stackoverflow.com/users/16228/sal) (https://es.stackoverflow.com/questions/636365/shell-exec-no-se-ejecuta-con-parametros-get)** 
 
  
