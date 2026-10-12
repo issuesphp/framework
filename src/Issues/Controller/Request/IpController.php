@@ -6,7 +6,7 @@ namespace Issues\Controller\Request;
 class IpController 
 {
 
-  function __construct()
+   function __construct()
    {
       ini_set('display_errors', 1);
       ini_set('display_startup_errors', 1);
@@ -16,34 +16,45 @@ class IpController
    }  
 
 
-  public function output($result)
-  {   
+   public function output($result)
+   {   
 
-    echo $result;  
+     echo $result;  
 
   }
 
-  public function view($fileName,array $params = null)
+  // public function view($fileName,array $params = null)
+  public function view($fileName, $params = null)
   {
 
-    $result = shell_exec('php resources/views/'.$fileName.'.php');
+  // $result = shell_exec('php resources/views/'.$fileName.'.php');
 
-    $error = shell_exec('php resources/views/errors/error_404.php');
+   // $data = serialize($params);
 
-    if (empty($result)) {
+   // $data = implode(", ", $params);
 
-     header("HTTP/1.1 404 Not Found");
-     echo $error;
+   // $data = join(" | ", $params);
 
-    }else{
+   $data = json_encode($params);
 
-      echo $result;  
-    }   
+   $result = shell_exec('php resources/views/'.$fileName.'.php params='.$data);
 
-   
 
-  }       
+   // $result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php params='.$params);  
+
+    // $result = shell_exec('php resources/views/welcome.php');   
+
+   echo $result;  
+
+}       
 
 }
 
-
+// $main = new MainController();
+// $controller = new Controller();
+// var_dump($user);
+// var_dump($controller);
+// exit;
+// $user->index('Apple', 'Red');
+// $main->output('test');
+// $main->output();
