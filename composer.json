@@ -12,6 +12,13 @@
 			"email": "joncastdev@gmail.com"
 		}
 	],
-	"require": {}
+	"require": {
+
+	},
+	"autoload": {
+		"psr-4": {			
+			"Issues\\": "src/Issues/"
+		}
+	}
 }
 
