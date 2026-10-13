@@ -168,6 +168,13 @@ public static function test() {
 	
 }
 
+public function test2() {	
+
+	echo "test2";
+
+	
+}
+
 }
 
 
