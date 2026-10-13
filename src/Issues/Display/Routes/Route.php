@@ -161,6 +161,20 @@ public static function init() {
 	
 }
 
+public static function test() {	
+
+	echo "test";
+
+	
+}
+
+public function test2() {	
+
+	echo "test2";
+
+	
+}
+
 }
 
 
