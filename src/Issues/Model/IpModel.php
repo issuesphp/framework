@@ -4,11 +4,11 @@ namespace Issues\Model;
 
 use Issues\Model\ConnectionInterface;
 
-require __DIR__ . '../../../config/Database.php';
+// require __DIR__ . '../../../config/Database.php';
 
-require __DIR__ . '../../../config/App.php';
+// require __DIR__ . '../../../config/App.php';
 
-include 'ConnectionInterface.php';
+// include 'ConnectionInterface.php';
 
 use PDO;
 
