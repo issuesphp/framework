@@ -10,7 +10,7 @@ use Issues\Model\ConnectionInterface;
 
 // include 'ConnectionInterface.php';
 
-use Config\Database;
+use App\Config\Database;
 
 use PDO;
 
@@ -196,7 +196,7 @@ class IpModel implements ConnectionInterface
 	{ 
 
 
-		switch (DB_DRIVER) {
+		switch (DATABASE::DB_DRIVER) {
 			case "mysql":
 
 			switch ($dbNumber) {
