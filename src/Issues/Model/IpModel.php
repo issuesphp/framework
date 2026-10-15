@@ -10,6 +10,8 @@ use Issues\Model\ConnectionInterface;
 
 // include 'ConnectionInterface.php';
 
+use Config\Database;
+
 use PDO;
 
 
@@ -26,7 +28,7 @@ class IpModel implements ConnectionInterface
 
 		// error_reporting(E_ALL);
 
-		return $this->getDebug(APP_STATE);		
+		// return $this->getDebug(APP_STATE);		
 
 	}		
 
@@ -200,14 +202,18 @@ class IpModel implements ConnectionInterface
 			switch ($dbNumber) {
 				case 1:
 
-				$conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+				// $conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+				$conn = self::getPdo(DATABASE::DB_HOST, DATABASE::DB_DATABASE, DATABASE::DB_USERNAME, DATABASE::DB_PASSWORD);
+
 
 				return $conn;
 				
 				break;		
 				case 2:	
 
-				$conn = self::getPdo(DB_SECOND_HOST, DB_SECOND_DATABASE, DB_SECOND_USERNAME, DB_SECOND_PASSWORD);
+				// $conn = self::getPdo(DB_SECOND_HOST, DB_SECOND_DATABASE, DB_SECOND_USERNAME, DB_SECOND_PASSWORD);
+
+				$conn = self::getPdo(DATABASE::DB_SECOND_HOST, DATABASE::DB_SECOND_DATABASE, DATABASE::DB_SECOND_USERNAME, DATABASE::DB_SECOND_PASSWORD);
 
 				return $conn;	
 
@@ -217,7 +223,8 @@ class IpModel implements ConnectionInterface
 
 				// echo "Limit Connection";
 
-				$conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+				// $conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+				$conn = self::getPdo(DATABASE::DB_HOST, DATABASE::DB_DATABASE, DATABASE::DB_USERNAME, DATABASE::DB_PASSWORD);
 
 				return $conn;							
 			}
