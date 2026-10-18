@@ -152,6 +152,55 @@ public static function get($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet
 	
 }
 
+public static function post($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null) {
+
+		// cuarto parametro
+		// print_r($segmentGet);
+
+		// print_r($param1);
+		// exit;
+
+
+		if ($urlEnd == $segmentGet) {
+
+
+
+			$mayusfirstLetter = ucfirst($ccontrollerName);
+
+
+			$controllerFile = 'app/Http/Controllers/'.$mayusfirstLetter.'Controller'.'.php';
+
+
+
+			$displayFile = 'app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php';
+
+
+			if (file_exists($controllerFile)&&file_exists($displayFile) && $param1 !=null) {
+
+			// echo "aqui";
+
+				// $param = escapeshellarg($param1);
+
+				$data = json_encode($param1);
+
+				$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php param1='.$data);
+
+				echo $result;
+			// return $result; 	
+
+			}
+
+
+		}else {
+		// $result = shell_exec('php resources/views/errors/error_404.php');
+			header("HTTP/1.1 404 Not Found");
+
+		}
+		
+
+
+	}
+
 public static function init() {
 
 	$result = shell_exec('php app/Http/Displays/welcome/index.php');
