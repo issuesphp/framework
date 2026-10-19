@@ -19,13 +19,13 @@ class IpController
    public function output($result)
    {   
 
-    echo $result;  
+     echo $result;  
 
- }
+  }
 
   // public function view($fileName,array $params = null)
- public function view($fileName, $params = null)
- {
+  public function view($fileName, $params = null)
+  {
 
   // $result = shell_exec('php resources/views/'.$fileName.'.php');
 
@@ -48,14 +48,14 @@ class IpController
 
 } 
 
-public function redirectGo($uri)
+public function redirectGo($ccontrollerName,$mmethodName)
 {   
 
-   header('Location: '.$uri);
+  $result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php');
 
-   exit;
+  echo $result;
 
-}      
+}    
 
 }
 
