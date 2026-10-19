@@ -187,6 +187,47 @@ class IpModel implements ConnectionInterface
 
 
 	}
+
+	public static function introduce($tableName,$rowData,$rowValue,$dbNumber = null)
+	{ 
+
+		// print_r($rowData[0]);
+
+		// print_r($rowValue[0]);
+
+		// exit;
+
+		$quantityRow = count($rowData);
+
+		$quantityValue = count($rowValue);
+
+		// echo $quantity;
+
+		// exit;
+		$conn = self::getConnection($dbNumber);
+
+		switch ($quantityRow && $quantityValue) {
+			case 1:			
+			
+			$sql = "INSERT INTO ".$tableName."(".$rowData[0].")"."VALUES"."("."'".$rowValue[0]."'".")";
+
+
+			$result = $conn->query($sql);
+
+			return $result;
+
+			break;		
+			case 2:		
+
+			break;
+			default:
+
+			echo "404";					
+		}		
+
+
+
+	}
 	
 
 	
