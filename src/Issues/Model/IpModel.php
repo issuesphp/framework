@@ -188,28 +188,37 @@ class IpModel implements ConnectionInterface
 
 	}
 
-	public static function introduce($tableName,$rowData,$rowValue,$dbNumber = null)
+	public static function introduce($tableName,$rowData,$dbNumber = null)
 	{ 
 
-		// print_r($rowData[0]);
+		// print_r($rowData);
 
-		// print_r($rowValue[0]);
+		// // print_r($rowValue[0]);
 
 		// exit;
 
 		$quantityRow = count($rowData);
 
-		$quantityValue = count($rowValue);
+		$arrKeys = array_keys($rowData);
+
+		$arrSocc = array_values($rowData);
+
+		// print_r($arrSocc);
+
+		// exit;
+
+		// $quantityValue = count($rowValue);
 
 		// echo $quantity;
 
 		// exit;
 		$conn = self::getConnection($dbNumber);
 
-		switch ($quantityRow && $quantityValue) {
+		// switch ($quantityRow && $quantityValue) {
+		switch ($quantityRow) {
 			case 1:			
 			
-			$sql = "INSERT INTO ".$tableName."(".$rowData[0].")"."VALUES"."("."'".$rowValue[0]."'".")";
+			$sql = "INSERT INTO ".$tableName."(".$arrKeys[0].")"."VALUES"."("."'".$arrSocc[0]."'".")";
 
 
 			$result = $conn->query($sql);
@@ -228,7 +237,6 @@ class IpModel implements ConnectionInterface
 
 
 	}
-	
 
 	
 
