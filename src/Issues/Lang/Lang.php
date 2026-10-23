@@ -3,7 +3,7 @@
 namespace Issues\Lang;
 
 
-use App\Config\App;
+use App\Config\AppBase;
 
 use App\Lang\En\EnWelcome;
 
@@ -20,32 +20,25 @@ class Lang
 	public static function getLang()
 	{ 
 
-		// print_r(App::APP_LOCALE);
+		
 
-		// print_r(EnWelcome::LANG_WELCOME);
+		switch (AppBase::APP_LOCALE) {
+			case "en":
 
-		// exit;
+			return EnWelcome::OPTIONS;	
 
-		// echo "a";
+			break;		
+			case "es":	
 
-		if (App::APP_LOCALE == 'en') {
+			return EsWelcome::OPTIONS;	
 
-			// print_r(EnWelcome::LANG_WELCOME);
+			break;
+			default:
 
-			// return EnWelcome::LANG_WELCOME;
-
-			return EnWelcome::OPTIONS;
-			
-			// return EnWelcome::LANG_WELCOME;
+			echo "Lenguage not Found";					
 		}
 
-		// $result = match(App::APP_LOCALE) {
-		// 	'en' => return EnWelcome::LANG_WELCOME,
-		// 	'es' => return EsWelcome::LANG_WELCOME,			
-		// 	default => 'No Lang Found',
-		// }
-
-		// echo $result;
+		
 
 		
 
