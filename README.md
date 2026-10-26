@@ -4,7 +4,7 @@ A simple PHP framework that helps solve problems in software development.
 
 ## Documentation
 
-The IssuesPHP Framework manual is available at [blog/docs](https://issuesphp.blogspot.com/p/issuesphp.html) and [video/tutorials](https://www.udemy.com/course/issuesphp-framework-from-scratch-step-by-step-with-php-8/?couponCode=GITHUB).
+The IssuesPHP Framework manual is available at [docs](https://issuesphpframework.online/user-guide).
 
 
 ## Installation
