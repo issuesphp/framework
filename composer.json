@@ -9,9 +9,12 @@
 	"authors": [
 		{
 			"name": "jonathan castro",
-			"email": "joncastdev@gmail.com"
+			"email": "contact@issuesphpframework.online"
 		}
 	],
+	 "support": {        
+        "source": "https://forum.issuesphpframework.online/"
+    },
 	"require": {
 		 "php": "^8.3"
 	},
