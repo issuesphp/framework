@@ -19,10 +19,51 @@ class Route
 
 	public static function get($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null) {
 
-		// echo $param3;
+		$display = self::getDisplay($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);
+
+		// self::options($routeNumber,$ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);
+
+	}
+
+	// public static function get1($routeNumber,$ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null) {
+
+	// 	// $display = self::getDisplay($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);
+
+	// 	self::options($routeNumber,$ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);
+
+	// }
+
+	// public static function options($routeNumber,$ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null) {
+
+
+	// 	switch ($routeNumber) {
+	// 		case 1:			
+	// 		// echo json_encode("admin");
+
+	// 		$display = self::getDisplay($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);
+
+	// 		redirect(base_url('dashboard'));		
+	// 		break;		
+	// 		case 2:	
+
+	// 		$display = self::getDisplay($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);	
+
+	// 		break;					
+	// 	}
+
+		
+
+	// }
+
+	public static function getDisplay($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null) {
+
+		// echo $routeNumber;
 
 		// exit;
 
+
+
+	// if ($routeNumber = 3 && $urlEnd == $segmentGet) {
 		if ($urlEnd == $segmentGet) {
 		// if ($mmethodName == $urlEnd && $urlEnd == $segmentGet) {
 
@@ -37,7 +78,7 @@ class Route
 				// case 0:			
 				// echo "falso 3 parans";
 
-				
+
 
 				// break;		
 				case 1 :
@@ -52,7 +93,7 @@ class Route
 
 				$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php param1='.$data);
 
-				
+
 				echo $result;		
 				break;					
 			}
@@ -63,7 +104,7 @@ class Route
 				// case 0:			
 				// echo "falso 2 parans";
 
-				
+
 
 				// break;		
 				case 1 :
@@ -87,7 +128,7 @@ class Route
 				// case 0:			
 				// echo "falso 1 parans";
 
-				
+
 
 				// break;		
 				case 1 :
@@ -104,7 +145,7 @@ class Route
 				// case 0:			
 				// echo "falso 0 parans";
 
-				
+
 
 				// break;		
 				case 1 :
@@ -115,16 +156,7 @@ class Route
 			}
 
 		// end segnment
-		} else {
-
-			// header("HTTP/1.1 404 Not Found");
-			$error = shell_exec('php resources/views/errors/error_404.php');
-			echo $error;
-		//exit elimina el duplicado de la vista
-		// pero no se ejecuta la segunda funcion
-		// exit;
-
-		}
+		} 
 
 	}
 
@@ -172,7 +204,7 @@ class Route
 			header("HTTP/1.1 404 Not Found");
 
 		}
-		
+
 
 
 	}
@@ -189,6 +221,13 @@ class Route
 	public static function test() {	
 
 		echo "test";
+
+
+	}
+
+	public static function otro2() {	
+
+		echo "test2";
 
 
 	}
