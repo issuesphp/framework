@@ -17,34 +17,71 @@ class Route
 {
 
 
-public static function get($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null) {
+	public static function get($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null) {
 
-		// echo $param3;
+		$display = self::getDisplay($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);
+
+		// self::options($routeNumber,$ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);
+
+	}
+
+	// public static function get1($routeNumber,$ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null) {
+
+	// 	// $display = self::getDisplay($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);
+
+	// 	self::options($routeNumber,$ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);
+
+	// }
+
+	// public static function options($routeNumber,$ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null) {
+
+
+	// 	switch ($routeNumber) {
+	// 		case 1:			
+	// 		// echo json_encode("admin");
+
+	// 		$display = self::getDisplay($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);
+
+	// 		redirect(base_url('dashboard'));		
+	// 		break;		
+	// 		case 2:	
+
+	// 		$display = self::getDisplay($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);	
+
+	// 		break;					
+	// 	}
+
+		
+
+	// }
+
+	public static function getDisplay($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null) {
+
+		// echo $routeNumber;
 
 		// exit;
 
 
 
-		if ($urlEnd == $segmentGet) {	
-
+	// if ($routeNumber = 3 && $urlEnd == $segmentGet) {
+		if ($urlEnd == $segmentGet) {
+		// if ($mmethodName == $urlEnd && $urlEnd == $segmentGet) {
 
 			$mayusfirstLetter = ucfirst($ccontrollerName);
 
 
 			$controllerFile = 'app/Http/Controllers/'.$mayusfirstLetter.'Controller'.'.php';
 
-			$displayFile = 'app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php';
+			$displayFile = 'app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php';	
+
+			switch (file_exists($controllerFile)&&file_exists($displayFile) && $param1 !=null && $param2 !=null && $param3 !=null) {
+				// case 0:			
+				// echo "falso 3 parans";
 
 
 
-			if (file_exists($controllerFile)&&file_exists($displayFile) && $param1 !=null && $param2 !=null && $param3 !=null) {
-
-
-                 // echo "aqui";
-
-                 // exit;
-
-				// $result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php param1='.$param1.'&segment='.$param2.'&slug='.$param3);
+				// break;		
+				case 1 :
 
 				$params = array(
 					"param1" => $param1,
@@ -56,19 +93,21 @@ public static function get($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet
 
 				$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php param1='.$data);
 
-				
-				echo $result;
+
+				echo $result;		
+				break;					
+			}
+
+			//end 3 params
+
+			switch (file_exists($controllerFile)&&file_exists($displayFile) && $param1 !=null && $param2 !=null) {
+				// case 0:			
+				// echo "falso 2 parans";
 
 
-			} elseif (file_exists($controllerFile)&&file_exists($displayFile) && $param1 !=null && $param2 !=null) { 
 
-				// echo "aqui";
-
-				// exit;
-
-				// $result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php param1='.$param1.'&'.'segment='.$param2);
-
-				// $result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php param1='.$param1.'&segment='.$param2);
+				// break;		
+				case 1 :
 
 				$params = array(
 					"param1" => $param1,
@@ -79,49 +118,49 @@ public static function get($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet
 
 				$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php param1='.$data);	
 
-				echo $result;
+				echo $result;	
+				break;					
+			}
 
-			} elseif (file_exists($controllerFile)&&file_exists($displayFile) && $param1 !=null) {
+			//end 2 params
+
+			switch (file_exists($controllerFile)&&file_exists($displayFile) && $param1 !=null) {
+				// case 0:			
+				// echo "falso 1 parans";
+
+
+
+				// break;		
+				case 1 :
 
 				$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php param1='.$param1);				
 
 				echo $result;	
-
-			} elseif (file_exists($controllerFile)&&file_exists($displayFile)) {
-
-			 // echo "aqui";
-
-				$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php');
-				echo $result;
-
-			// return $result; 	
-
-			} else {
-
-			// header("HTTP/1.1 404 Not Found");
-			// $error = shell_exec('php resources/views/errors/error_404.php');
-			// echo $error;
-		//exit elimina el duplicado de la vista
-		// pero no se ejecuta la segunda funcion
-		// exit;
-
+				break;					
 			}
 
+			//end 1 params
 
-
-		}else {
-
-			
-			header("HTTP/1.1 404 Not Found");
-
-		}
+			switch (file_exists($controllerFile)&&file_exists($displayFile)) {
+				// case 0:			
+				// echo "falso 0 parans";
 
 
 
+				// break;		
+				case 1 :
+
+				$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php');
+				echo $result;	
+				break;					
+			}
+
+		// end segnment
+		} 
 
 	}
 
-public static function post($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null) {
+	public static function post($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null) {
 
 		// cuarto parametro
 		// print_r($segmentGet);
@@ -165,33 +204,40 @@ public static function post($ccontrollerName , $mmethodName, $urlEnd ,$segmentGe
 			header("HTTP/1.1 404 Not Found");
 
 		}
-		
+
 
 
 	}
 
-public static function init() {
+	public static function init() {
 
-	$result = shell_exec('php app/Http/Displays/welcome/index.php');
+		$result = shell_exec('php app/Http/Displays/welcome/index.php');
 
-	echo $result;
+		echo $result;
 
-	
-}
 
-public static function test() {	
+	}
 
-	echo "test";
+	public static function test() {	
 
-	
-}
+		echo "test";
 
-public function test2() {	
 
-	echo "test2";
+	}
 
-	
-}
+	public static function otro2() {	
+
+		echo "test2";
+
+
+	}
+
+	public function test2() {	
+
+		echo "test2";
+
+
+	}
 
 }
 
