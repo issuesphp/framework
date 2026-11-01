@@ -238,7 +238,8 @@ class IpModel implements ConnectionInterface
 
 	}
 
-	
+
+
 
 	public static function getConnection($dbNumber = null)
 	// public function getConnection5()
@@ -256,13 +257,43 @@ class IpModel implements ConnectionInterface
 
 
 				return $conn;
-				
+
 				break;		
 				case 2:	
 
 				// $conn = self::getPdo(DB_SECOND_HOST, DB_SECOND_DATABASE, DB_SECOND_USERNAME, DB_SECOND_PASSWORD);
 
 				$conn = self::getPdo(DATABASE::DB_SECOND_HOST, DATABASE::DB_SECOND_DATABASE, DATABASE::DB_SECOND_USERNAME, DATABASE::DB_SECOND_PASSWORD);
+
+				return $conn;	
+
+				break;
+
+				case 3:	
+
+				// $conn = self::getPdo(DB_SECOND_HOST, DB_SECOND_DATABASE, DB_SECOND_USERNAME, DB_SECOND_PASSWORD);
+
+				$conn = self::getPdo(DATABASE::DB_THIRD_HOST, DATABASE::DB_THIRD_DATABASE, DATABASE::DB_THIRD_USERNAME, DATABASE::DB_THIRD_PASSWORD);
+
+				return $conn;	
+
+				break;
+
+				case 4:	
+
+				// $conn = self::getPdo(DB_SECOND_HOST, DB_SECOND_DATABASE, DB_SECOND_USERNAME, DB_SECOND_PASSWORD);
+
+				$conn = self::getPdo(DATABASE::DB_QUARTER_HOST, DATABASE::DB_QUARTER_DATABASE, DATABASE::DB_QUARTER_USERNAME, DATABASE::DB_QUARTER_PASSWORD);
+
+				return $conn;	
+
+				break;
+
+				case 5:	
+
+				// $conn = self::getPdo(DB_SECOND_HOST, DB_SECOND_DATABASE, DB_SECOND_USERNAME, DB_SECOND_PASSWORD);
+
+				$conn = self::getPdo(DATABASE::DB_FIFTH_HOST, DATABASE::DB_FIFTH_DATABASE, DATABASE::DB_FIFTH_USERNAME, DATABASE::DB_FIFTH_PASSWORD);
 
 				return $conn;	
 
@@ -278,7 +309,7 @@ class IpModel implements ConnectionInterface
 				return $conn;							
 			}
 
-			
+
 			// $conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
 
 			// return $conn;			
@@ -318,7 +349,7 @@ class IpModel implements ConnectionInterface
 
 
 
-		
+
 
 	}
 
@@ -355,7 +386,7 @@ class IpModel implements ConnectionInterface
 			error_reporting(E_ALL);	
 
 		} else {
-			
+
 			ini_set('display_errors', 0);
 			ini_set('display_startup_errors', 0);
 
