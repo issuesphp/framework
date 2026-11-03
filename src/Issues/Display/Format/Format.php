@@ -49,6 +49,27 @@ class Format
 
 	}
 
+	public static function getArrayObjectFormat($argv) {
+		
+
+		if (isset($argv[1])) {
+			parse_str($argv[1], $_GET); 
+		}
+
+		$params = $_GET['param1'] ?? '';
+
+
+
+		$jsonValid = preg_replace('/([a-zA-Z0-9_]+)\s*:\s*([a-zA-Z0-9_@.]+)/', '"$1":"$2"', $params);
+
+
+		$jobjectArray = json_decode($jsonValid);
+
+		return $jobjectArray; 
+
+
+	}
+
 	public static function getOneArrayFormat($argv) {
 
 		
