@@ -238,8 +238,137 @@ class IpModel implements ConnectionInterface
 
 	}
 
+	public static function getUserLogin($tableName,$email, $password,$dbNumber = null)
+	{ 
+
+		// print_r($email);
+
+		// exit;
+
+		
+
+		// $conn = IpModel::getConnection();
+
+		$conn = self::getConnection($dbNumber);
+
+		// $sql = "SELECT * FROM users";
+		// $sql = "SELECT password FROM USERS"." WHERE email=".$email;
+		$sql = "SELECT password FROM ".$tableName." WHERE email=:email";
+		// $sql = "SELECT * FROM ".$tableName." WHERE email=".$email;
+		$result = $conn->prepare($sql);
+		
+		$result->execute(['email' => $email]);
+
+		// $result = $conn->query($sql);
+
+		// $result = mysqli_query($this->conn, $sql);
+
+		if ($result->rowCount() > 0) {
+
+			// $row = $result->fetch();
+
+			$row = $result->fetch(\PDO::FETCH_OBJ);
+
+			// return $row;
+
+			// return $row->password;
+
+			// return $this->verifyHash($password,$row->password);
+
+			// return self::verifyHash($password,$row->password);
+
+			if (self::verifyHash($password,$row->password)) {
 
 
+				$userData = self::userSession($email);
+
+				// return $userData;				
+
+
+
+				$data=array(
+					'id' => $userData->id,		
+					'email' => $userData->email,		
+					'role_id' => $userData->role_id										
+				);
+
+				return $data;
+
+				
+				// $this->session->set_userdata('user',$data);
+
+				
+				// $userInfo = $this->session->userdata('user');
+
+				// $this->nivUsers($userInfo);
+
+				
+				// $this->lastAccess($email);
+
+
+
+
+			}
+
+		} else {
+
+			// echo "0 results";
+			
+		}
+
+
+
+	}
+
+	public static function verifyHash($password,$hash)
+	{
+		return password_verify($password,$hash);
+
+	}
+
+	public static function userSession($email,$dbNumber = null)
+	{
+		
+
+		$conn = self::getConnection($dbNumber);
+
+		// $sql = "SELECT * FROM users";
+		// $sql = "SELECT password FROM USERS"." WHERE email=".$email;
+		$sql = "SELECT id,email,role_id FROM users"." WHERE email=:email";
+		// $sql = "SELECT * FROM ".$tableName." WHERE email=".$email;
+		$result = $conn->prepare($sql);
+		
+		$result->execute(['email' => $email]);
+
+		// $result = $conn->query($sql);
+
+		// $result = mysqli_query($this->conn, $sql);
+
+		if ($result->rowCount() > 0) {
+
+			// $row = $result->fetch();
+
+			$row = $result->fetch(\PDO::FETCH_OBJ);
+
+			// return $row;
+
+			// return $row->password;
+
+			// return $this->verifyHash($password,$row->password);
+
+			// return self::verifyHash($password,$row->password);
+
+			return $row;	
+
+		} else {
+
+			// echo "0 results";
+			
+		}	
+		
+	}
+
+	
 
 	public static function getConnection($dbNumber = null)
 	// public function getConnection5()
@@ -257,43 +386,13 @@ class IpModel implements ConnectionInterface
 
 
 				return $conn;
-
+				
 				break;		
 				case 2:	
 
 				// $conn = self::getPdo(DB_SECOND_HOST, DB_SECOND_DATABASE, DB_SECOND_USERNAME, DB_SECOND_PASSWORD);
 
 				$conn = self::getPdo(DATABASE::DB_SECOND_HOST, DATABASE::DB_SECOND_DATABASE, DATABASE::DB_SECOND_USERNAME, DATABASE::DB_SECOND_PASSWORD);
-
-				return $conn;	
-
-				break;
-
-				case 3:	
-
-				// $conn = self::getPdo(DB_SECOND_HOST, DB_SECOND_DATABASE, DB_SECOND_USERNAME, DB_SECOND_PASSWORD);
-
-				$conn = self::getPdo(DATABASE::DB_THIRD_HOST, DATABASE::DB_THIRD_DATABASE, DATABASE::DB_THIRD_USERNAME, DATABASE::DB_THIRD_PASSWORD);
-
-				return $conn;	
-
-				break;
-
-				case 4:	
-
-				// $conn = self::getPdo(DB_SECOND_HOST, DB_SECOND_DATABASE, DB_SECOND_USERNAME, DB_SECOND_PASSWORD);
-
-				$conn = self::getPdo(DATABASE::DB_QUARTER_HOST, DATABASE::DB_QUARTER_DATABASE, DATABASE::DB_QUARTER_USERNAME, DATABASE::DB_QUARTER_PASSWORD);
-
-				return $conn;	
-
-				break;
-
-				case 5:	
-
-				// $conn = self::getPdo(DB_SECOND_HOST, DB_SECOND_DATABASE, DB_SECOND_USERNAME, DB_SECOND_PASSWORD);
-
-				$conn = self::getPdo(DATABASE::DB_FIFTH_HOST, DATABASE::DB_FIFTH_DATABASE, DATABASE::DB_FIFTH_USERNAME, DATABASE::DB_FIFTH_PASSWORD);
 
 				return $conn;	
 
@@ -309,7 +408,7 @@ class IpModel implements ConnectionInterface
 				return $conn;							
 			}
 
-
+			
 			// $conn = self::getPdo(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
 
 			// return $conn;			
@@ -349,7 +448,7 @@ class IpModel implements ConnectionInterface
 
 
 
-
+		
 
 	}
 
@@ -386,7 +485,7 @@ class IpModel implements ConnectionInterface
 			error_reporting(E_ALL);	
 
 		} else {
-
+			
 			ini_set('display_errors', 0);
 			ini_set('display_startup_errors', 0);
 
