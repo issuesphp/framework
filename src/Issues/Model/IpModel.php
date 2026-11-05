@@ -35,28 +35,15 @@ class IpModel implements ConnectionInterface
 	public static function chosenAll($tableName,$dbNumber = null)
 	{ 
 
-		// echo "a";
-
-		// exit;
-
-
-		// $conn = IpModel::getConnection();
+		
 
 		$conn = self::getConnection($dbNumber);
 
-		// $conn = $this->getConnection();
+		$sql = "SELECT * FROM ".$tableName;		
 
-		// $conn = $this->conn;
-
-		// $sql = "SELECT * FROM users";
-		$sql = "SELECT * FROM ".$tableName;
-// Execute the SQL query
-		// $result = mysqli_query($conn, $sql);
 
 		$result = $conn->query($sql);
 
-
-		// $result = mysqli_query($this->conn, $sql);
 
 		// Process the result set
 		if ($result->rowCount() > 0) {
@@ -65,7 +52,7 @@ class IpModel implements ConnectionInterface
 
 			// $row = $result->setFetchMode(PDO::FETCH_NUM);
 
-			$row = $result->fetch(\PDO::FETCH_OBJ);
+			$row = $result->fetchAll();
 
 			// return $result->setFetchMode(PDO::FETCH_NUM);
 
@@ -84,23 +71,24 @@ class IpModel implements ConnectionInterface
 	public static function chosenOne($tableName, $id,$dbNumber = null)
 	{ 
 
-		
-
-		// $conn = IpModel::getConnection();
-
 		$conn = self::getConnection($dbNumber);
 
-		// $sql = "SELECT * FROM users";
-		$sql = "SELECT * FROM ".$tableName." WHERE id=".$id;
-			// $sql = "SELECT * FROM '{$tableName}' WHERE id='{$id}'";
-		// $sql = "SELECT id, firstname, lastname FROM MyGuests WHERE lastname='Doe'";
+		
+		$sql = "SELECT * FROM ".$tableName." WHERE id=:id";
 
-// Execute the SQL query
-		// $result = mysqli_query($conn, $sql);
 
-		$result = $conn->query($sql);
+		$result = $conn->prepare($sql);
 
-		// $result = mysqli_query($this->conn, $sql);
+		// $result->execute(
+		// 	[$email
+		// 	]);
+		
+		$result->execute(
+			['id' => $id
+		]);
+
+		// $result = $conn->query($sql);
+		
 
 		if ($result->rowCount() > 0) {
 
@@ -121,25 +109,22 @@ class IpModel implements ConnectionInterface
 	}
 
 	public static function chosenOrLost($tableName, $id,$dbNumber = null)
-	{ 
+	{ 		
 
-		
 
-		// $conn = IpModel::getConnection();
 
 		$conn = self::getConnection($dbNumber);
 
-		// $sql = "SELECT * FROM users";
-		$sql = "SELECT * FROM ".$tableName." WHERE id=".$id;
-			// $sql = "SELECT * FROM '{$tableName}' WHERE id='{$id}'";
-		// $sql = "SELECT id, firstname, lastname FROM MyGuests WHERE lastname='Doe'";
+		$sql = "SELECT * FROM ".$tableName." WHERE id=:id";
 
-// Execute the SQL query
-		// $result = mysqli_query($conn, $sql);
+		$result = $conn->prepare($sql);
 
-		$result = $conn->query($sql);
+		
+		$result->execute(
+			['id' => $id
+		]);
 
-		// $result = mysqli_query($this->conn, $sql);
+		// $result = $conn->query($sql);
 
 		// Process the result set
 		if ($result->rowCount() > 0) {
@@ -162,18 +147,22 @@ class IpModel implements ConnectionInterface
 	}
 
 	public static function slipk($tableName, $id,$dbNumber = null)
-	{ 
+	{ 		
 
-		
 
-		// $conn = IpModel::getConnection();
 
 		$conn = self::getConnection($dbNumber);
 
-		// $sql = "SELECT * FROM users";
-		$sql = "DELETE FROM ".$tableName." WHERE id=".$id;			
+		$sql = "DELETE FROM ".$tableName." WHERE id=:id";		
 
-		$result = $conn->query($sql);
+
+		$result = $conn->prepare($sql);		
+		
+		$result->execute(
+			['id' => $id
+		]);				
+
+		// $result = $conn->query($sql);
 
 		// if (empty($result)) {
 
