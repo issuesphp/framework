@@ -4,7 +4,7 @@ namespace Issues\Display\Format;
 
 
 
-class Format 
+class FormatDisplay 
 {
 
 	public static function getArrayFormat($argv) {
