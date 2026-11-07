@@ -158,9 +158,9 @@ class Route
 		// end segnment
 		}
 
-		$result = shell_exec('php resources/views/errors/error_404'.'.php');
+		// $result = shell_exec('php resources/views/errors/error_404'.'.php');
 
-		echo $result; 
+		// echo $result; 
 
 	}
 
