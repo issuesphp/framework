@@ -138,9 +138,13 @@ class IpModel implements ConnectionInterface
 		} else {
 
 			// echo "0 results";
-			header("HTTP/1.1 404 Not Found");
-			$error = shell_exec('php resources/views/errors/error_404_querys.php');
-			echo $error;
+			// header("HTTP/1.1 404 Not Found");
+			// $error = shell_exec('php resources/views/errors/error_404_querys.php');
+			// echo $error;
+
+			$result = shell_exec('php resources/views/errors/error_404'.'.php');
+
+			echo $result;	
 			
 		}
 
