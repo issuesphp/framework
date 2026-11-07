@@ -10,7 +10,7 @@ class Fragment
 	public static function include($fileName) {	
 		
 
-		$result = shell_exec('php resources/views/inc/'.$fileName.'.php');
+		$result = shell_exec('php resources/views/'.$fileName.'.php');
 
 
 		echo $result;		
