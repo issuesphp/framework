@@ -15,7 +15,7 @@ class FormatDisplay
 			parse_str($argv[1], $_GET); 
 		}
 
-		$params = $_GET['params'] ?? '';
+		$params = $_GET['param1'] ?? '';
 
 
 		$jsonValid = preg_replace('/([a-zA-Z0-9_]+)\s*:\s*([^}]+)/', '"$1": "$2"', $params);
@@ -35,7 +35,7 @@ class FormatDisplay
 			parse_str($argv[1], $_GET); 
 		}
 
-		$params = $_GET['params'] ?? '';
+		$params = $_GET['param1'] ?? '';
 
 
 
@@ -78,7 +78,7 @@ class FormatDisplay
 			parse_str($argv[1], $_GET); 
 		}
 
-		$params = $_GET['params'] ?? '';
+		$params = $_GET['param1'] ?? '';
 		
 
 
@@ -96,7 +96,7 @@ class FormatDisplay
 			parse_str($argv[1], $_GET); 
 		}
 
-		$params = $_GET['params'] ?? '';		
+		$params = $_GET['param1'] ?? '';		
 
 
 		$jobject = json_decode($params);

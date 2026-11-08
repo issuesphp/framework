@@ -38,6 +38,46 @@ class FormatView
 
 
 	}
+	
+
+	public static function getObjectFormat($argv) {
+		
+
+		if (isset($argv[1])) {
+			parse_str($argv[1], $_GET); 
+		}
+
+		$params = $_GET['params'] ?? '';
+
+
+
+		$jsonValid = preg_replace('/([a-zA-Z0-9_]+)\s*:\s*([^}]+)/', '"$1": "$2"', $params);
+
+
+		$jobject = json_decode($jsonValid);
+
+		return $jobject; 
+
+
+	}
+
+	public static function getOneObjectFormat($argv) {
+
+		
+
+		if (isset($argv[1])) {
+			parse_str($argv[1], $_GET); 
+		}
+
+		$params = $_GET['params'] ?? '';		
+
+
+		$jobject = json_decode($params);
+
+		return $jobject; 
+
+
+	}
 
 	
 	public static function test() {	
