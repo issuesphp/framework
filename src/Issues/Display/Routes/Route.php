@@ -13,6 +13,8 @@ namespace Issues\Display\Routes;
 
 // }
 
+use App\Config\AppBase;
+
 class Route 
 {
 
@@ -51,9 +53,15 @@ class Route
 	// 		break;					
 	// 	}
 
-		
+
 
 	// }
+
+	public static function posttest($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null) {
+
+		$display = self::getDisplayPost($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null);		
+
+	}
 
 	public static function getDisplay($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null) {
 
@@ -158,9 +166,150 @@ class Route
 		// end segnment
 		}
 
+
+		// $result = shell_exec('php resources/views/errors/error_404'.$fileName.'.php');
+
+		if (AppBase::APP_DEBUG == 1) {
+			
+
+			header("HTTP/1.1 404 Not Found");
+
+			// $result = shell_exec('php resources/views/errors/error_404'.'.php');
+
+			// echo $result;
+
+		}
+
 		// $result = shell_exec('php resources/views/errors/error_404'.'.php');
 
-		// echo $result; 
+		// echo $result;	
+
+		// header("HTTP/1.1 404 Not Found");	 
+
+	}
+
+	public static function getDisplayPost($ccontrollerName , $mmethodName, $urlEnd ,$segmentGet,$param1 = null,$param2 = null,$param3 = null) {
+
+		// echo $routeNumber;
+
+		// exit;
+
+
+
+	// if ($routeNumber = 3 && $urlEnd == $segmentGet) {
+		if ($urlEnd == $segmentGet) {
+		// if ($mmethodName == $urlEnd && $urlEnd == $segmentGet) {
+
+			$mayusfirstLetter = ucfirst($ccontrollerName);
+
+
+			$controllerFile = 'app/Http/Controllers/'.$mayusfirstLetter.'Controller'.'.php';
+
+			$displayFile = 'app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php';	
+
+			switch (file_exists($controllerFile)&&file_exists($displayFile) && $param1 !=null && $param2 !=null && $param3 !=null) {
+				// case 0:			
+				// echo "falso 3 parans";
+
+
+
+				// break;		
+				case 1 :
+
+				$params = array(
+					"param1" => $param1,
+					"param2" => $param2,
+					"param3" => $param3          
+				);
+
+				$data = json_encode($params);
+
+				$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php param1='.$data);
+
+
+				echo $result;		
+				break;					
+			}
+
+			//end 3 params
+
+			switch (file_exists($controllerFile)&&file_exists($displayFile) && $param1 !=null && $param2 !=null) {
+				// case 0:			
+				// echo "falso 2 parans";
+
+
+
+				// break;		
+				case 1 :
+
+				$params = array(
+					"param1" => $param1,
+					"param2" => $param2       
+				);
+
+				$data = json_encode($params);
+
+				$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php param1='.$data);	
+
+				echo $result;	
+				break;					
+			}
+
+			//end 2 params
+
+			switch (file_exists($controllerFile)&&file_exists($displayFile) && $param1 !=null) {
+				// case 0:			
+				// echo "falso 1 parans";
+
+
+
+				// break;		
+				case 1 :
+
+				$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php param1='.$param1);				
+
+				echo $result;	
+				break;					
+			}
+
+			//end 1 params
+
+			switch (file_exists($controllerFile)&&file_exists($displayFile)) {
+				// case 0:			
+				// echo "falso 0 parans";
+
+
+
+				// break;		
+				case 1 :
+
+				$result = shell_exec('php app/Http/Displays/'.$ccontrollerName.'/'.$mmethodName.'.php');
+				echo $result;	
+				break;					
+			}
+
+		// end segnment
+		}
+
+
+		// $result = shell_exec('php resources/views/errors/error_404'.$fileName.'.php');
+
+		if (AppBase::APP_DEBUG == 1) {
+			
+
+			header("HTTP/1.1 404 Not Found");
+
+			// $result = shell_exec('php resources/views/errors/error_404'.'.php');
+
+			// echo $result;
+
+		}
+
+		// $result = shell_exec('php resources/views/errors/error_404'.'.php');
+
+		// echo $result;	
+
+		// header("HTTP/1.1 404 Not Found");	 
 
 	}
 
@@ -205,45 +354,56 @@ class Route
 
 		}else {
 		// $result = shell_exec('php resources/views/errors/error_404.php');
-			header("HTTP/1.1 404 Not Found");
+			// header("HTTP/1.1 404 Not Found");
 
 		}
 
+			if (AppBase::APP_DEBUG == 1) {
 
+
+				header("HTTP/1.1 404 Not Found");
+
+			// $result = shell_exec('php resources/views/errors/error_404'.'.php');
+
+			// echo $result;
+
+			}
+
+
+
+		}
+
+		public static function init() {
+
+			$result = shell_exec('php app/Http/Displays/welcome/index.php');
+
+			echo $result;
+
+
+		}
+
+		public static function test() {	
+
+			echo "test";
+
+
+		}
+
+		public static function otro2() {	
+
+			echo "test2";
+
+
+		}
+
+		public function test2() {	
+
+			echo "test2";
+
+
+		}
 
 	}
-
-	public static function init() {
-
-		$result = shell_exec('php app/Http/Displays/welcome/index.php');
-
-		echo $result;
-
-
-	}
-
-	public static function test() {	
-
-		echo "test";
-
-
-	}
-
-	public static function otro2() {	
-
-		echo "test2";
-
-
-	}
-
-	public function test2() {	
-
-		echo "test2";
-
-
-	}
-
-}
 
 
 
