@@ -361,6 +361,64 @@ class IpModel implements ConnectionInterface
 		
 	}
 
+	public static function createAuthTable($tableName,$dbNumber = null)
+	{ 
+
+		
+
+		$conn = self::getConnection($dbNumber);
+
+		$sql = "CREATE TABLE if not exists ".$tableName."(
+			id integer AUTO_INCREMENT PRIMARY KEY,
+			email varchar(255),
+			username varchar(255),
+			password varchar(255),
+			role_id integer
+		)";
+
+		// $sql = "CREATE TABLE if not exists ".$tableName."(
+		// 	id integer AUTO_INCREMENT PRIMARY KEY,
+		// 	email varchar(255),
+		// 	username varchar(255),
+		// 	password varchar(255),
+		// 	role_id integer
+		// )";
+
+		// $sql = "ers"." WHERE email=:email";
+		// $sql = "SELECT * FROM ".$tableName." WHERE email=".$email;
+		// $result = $conn->prepare($sql);
+		
+		// $result->execute([
+		// 	'email' => $email
+		// ]);		
+
+
+		$result = $conn->query($sql);
+
+
+		// Process the result set
+		if ($result->rowCount() > 0) {
+
+			// $row = $result->fetch();
+
+			// $row = $result->setFetchMode(PDO::FETCH_NUM);
+
+			// $row = $result->fetchAll();
+
+			// return $result->setFetchMode(PDO::FETCH_NUM);
+
+			// return $row;
+
+		} else {
+
+			// echo "0 results";
+
+		}	
+
+
+
+	}
+
 	
 
 	public static function getConnection($dbNumber = null)

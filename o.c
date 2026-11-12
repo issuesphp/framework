@@ -318,6 +318,18 @@ int main() {
 		}
 		// end
 
+			if (strcmp(op.comandName, "issuesphp:make:auth") == 0)
+		{
+
+			// system("php -S localhost:8080");
+			system("php app/Triggers/user/top.php");
+
+			  
+
+		}
+
+		// end
+
 		// scanf("%49s", op.comandName);
 
 		scanf("%49s", op.controllerName);
@@ -347,6 +359,10 @@ int main() {
 
 		}
 		// end
+
+	
+
+		
 		break;
 	default:
 		printf("No options: \n");
