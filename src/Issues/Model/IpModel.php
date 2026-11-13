@@ -219,13 +219,76 @@ class IpModel implements ConnectionInterface
 			return $result;
 
 			break;		
-			case 2:		
+			case 2:	
+
+			$sql = "INSERT INTO ".$tableName."(".$arrKeys[0].")"."VALUES"."("."'".$arrSocc[0]."'".")";
+
+
+			$result = $conn->query($sql);
+
+			return $result;	
+
+			break;
+
+			case 3:	
+
+			$sql = "INSERT INTO ".$tableName."(".$arrKeys[0].")"."VALUES"."("."'".$arrSocc[0]."'".")";
+
+
+			$result = $conn->query($sql);
+
+			return $result;	
+
+			break;
+
+			case 4:	
+
+			$sql = "INSERT INTO ".$tableName."(".$arrKeys[0].",".$arrKeys[1].",".$arrKeys[2].",".$arrKeys[3].",".$arrKeys[4].",".")"."VALUES"."("."'".$arrSocc[0]."'"."),"."("."'".$arrSocc[1]."'"."),"."("."'".$arrSocc[2]."'"."),"."("."'".$arrSocc[3]."'"."),"."("."'".$arrSocc[4]."'".")";
+
+
+			$result = $conn->query($sql);
+
+			return $result;	
 
 			break;
 			default:
 
 			echo "404";					
 		}		
+
+
+
+	}
+
+	public static function introduceUser($tableName,$rowData,$dbNumber = null)
+	{
+
+		$quantityRow = count($rowData);
+
+		$arrKeys = array_keys($rowData);
+
+		$arrSocc = array_values($rowData);
+
+		$conn = self::getConnection($dbNumber);
+
+
+		// $sql = "SELECT password FROM ".$tableName." WHERE email=:email";
+
+		$sql = "INSERT INTO ".$tableName."(email, username, password, role_id) 
+		VALUES (:email, :username, :password, :role_id)";
+		
+		$result = $conn->prepare($sql);
+		
+		$result->execute([
+			'email' => $arrSocc[0],
+			'username' => $arrSocc[1],
+			'password' => $arrSocc[2],
+			'role_id' => $arrSocc[3]			
+		]);
+
+		return $result;
+
+
 
 
 
