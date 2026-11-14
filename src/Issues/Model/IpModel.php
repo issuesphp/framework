@@ -209,7 +209,8 @@ class IpModel implements ConnectionInterface
 
 		// switch ($quantityRow && $quantityValue) {
 		switch ($quantityRow) {
-			case 1:			
+			case 1:
+			
 			
 			$sql = "INSERT INTO ".$tableName."(".$arrKeys[0].")"."VALUES"."("."'".$arrSocc[0]."'".")";
 
@@ -271,6 +272,8 @@ class IpModel implements ConnectionInterface
 
 		$conn = self::getConnection($dbNumber);
 
+		$password = password_hash($arrSocc[2],PASSWORD_BCRYPT);
+
 
 		// $sql = "SELECT password FROM ".$tableName." WHERE email=:email";
 
@@ -282,7 +285,7 @@ class IpModel implements ConnectionInterface
 		$result->execute([
 			'email' => $arrSocc[0],
 			'username' => $arrSocc[1],
-			'password' => $arrSocc[2],
+			'password' => $password,
 			'role_id' => $arrSocc[3]			
 		]);
 
