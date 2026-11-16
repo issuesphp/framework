@@ -12,69 +12,78 @@ class Session
 
 	public static $userInfo;    
 
-	public function __construct()
-	{
-		// parent::__construct();    
+	// public function __construct()
+	// {
+	// 	// parent::__construct();    
 
 
-		self::$userInfo = self::getUserSession();
-	}
+	// 	// self::$userInfo = self::getUserSession();
+	// }
 
 
 
 	public static function setUserSession($params)
 	{ 
-
-		// print_r($params);
+		
 
 		
 		$_SESSION["id"] = $params['id'];
 		$_SESSION["email"] = $params['email'];
-		$_SESSION["role_id"] = $params['role_id'];
+		$_SESSION["role_id"] = $params['role_id'];		
 
-		// $loginSession = array(
-		// 	"id" => $_SESSION["id"], 
-		// 	"email" => $_SESSION["email"],
-		// 	"role_id" => $_SESSION["role_id"]           
-		// );
+	}
 
-		// return $loginSession;
 
-		// $userData = self::getUserSession($loginSession);
+	public static function getUserSession()
+	{ 
 
-		// return $userData;   
+		// if (session_status() === PHP_SESSION_NONE) {
+		// 	session_start();
+		// }
+
+		// if (!empty($_SESSION["email"])) {
+		return [
+			"id" => $_SESSION["id"], 
+			"email" => $_SESSION["email"],
+			"role_id" => $_SESSION["role_id"]           
+		];
+		// }
+
+		// return null;
 		
 
 	}
 
-	// public static function getUserSession($params)
-	public static function getUserSession()
-	{ 
+	public static function init() {
+		if (self::status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+	}
 
-		// print_r($params);
+	public static function set($key, $value) {
+		$_SESSION[$key] = $value;
+	}
 
-		
-		// $_SESSION["id"] = $params['id'];
-		// $_SESSION["email"] = $params['email'];
-		// $_SESSION["role_id"] = $params['role_id'];
+	public static function get($key) {
+		if (isset($_SESSION[$key])) {
+			return $_SESSION[$key];
+		}
+		return null;
+	}
 
-		// $uSession = array(
-		// 	"id" => $params['id'],
-		// 	"email" => $params['email'],
-		// 	"role_id" => $params['role_id']        
-		// );
+	public static function delete($key) {
+		if (isset($_SESSION[$key])) {
+			unset($_SESSION[$key]);
+		}
+	}
 
-		// return $uSession; 
+	public static function status() {
+		return session_status();
+	}
 
-		$loginSession = array(
-			"id" => $_SESSION["id"], 
-			"email" => $_SESSION["email"],
-			"role_id" => $_SESSION["role_id"]           
-		);
-
-		return $loginSession;
-		
-
+	public static function destroy() {
+		session_unset();
+		session_destroy();
 	}
 
 
@@ -87,10 +96,10 @@ class Session
 		// if ($_SESSION["role_id"] != 1) {
 		if (self::$userInfo["role_id"] != 1) {
 
-				$result = shell_exec('php resources/views/errors/error_404'.'.php');
+			$result = shell_exec('php resources/views/errors/error_404'.'.php');
 
-				echo $result;
-			} 
+			echo $result;
+		} 
 
 
 
@@ -111,8 +120,8 @@ class Session
 		// }
 
 
-		}
-
-
-
 	}
+
+
+
+}
