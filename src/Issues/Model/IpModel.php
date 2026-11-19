@@ -210,33 +210,49 @@ class IpModel implements ConnectionInterface
 		// switch ($quantityRow && $quantityValue) {
 		switch ($quantityRow) {
 			case 1:
-			
-			
-			$sql = "INSERT INTO ".$tableName."(".$arrKeys[0].")"."VALUES"."("."'".$arrSocc[0]."'".")";
 
+			// 1. Asegúrate de que $tableName y $arrKeys[0] sean seguros (Lista blanca o nombres controlados por ti)
+			$sql = "INSERT INTO " . $tableName . " (" . $arrKeys[0] . ") VALUES (?)";
 
-			$result = $conn->query($sql);
+// 2. Preparas la consulta
+			$stmt = $conn->prepare($sql);
 
-			return $result;
+// 3. Ejecutas pasando el valor real dentro de un array
+			$result = $stmt->execute([
+				$arrSocc[0]
+			]);
+
+			return $result;		
 
 			break;		
 			case 2:	
 
-			$sql = "INSERT INTO ".$tableName."(".$arrKeys[0].")"."VALUES"."("."'".$arrSocc[0]."'".")";
+			$sql = "INSERT INTO " . $tableName . " (" . $arrKeys[0] . ", " . $arrKeys[1] . ") 
+			VALUES (?, ?)";
 
+			$stmt = $conn->prepare($sql);
 
-			$result = $conn->query($sql);
+			$result = $stmt->execute([
+				$arrSocc[0],
+				$arrSocc[1]
+			]);
 
 			return $result;	
 
 			break;
 
 			case 3:	
+		
+			$sql = "INSERT INTO " . $tableName . " (" . $arrKeys[0] . ", " . $arrKeys[1] . ", " . $arrKeys[2] . ") 
+			VALUES (?, ?, ?)";
 
-			$sql = "INSERT INTO ".$tableName."(".$arrKeys[0].")"."VALUES"."("."'".$arrSocc[0]."'".")";
+			$stmt = $conn->prepare($sql);
 
-
-			$result = $conn->query($sql);
+			$result = $stmt->execute([
+				$arrSocc[0],
+				$arrSocc[1],
+				$arrSocc[2]
+			]);
 
 			return $result;	
 
