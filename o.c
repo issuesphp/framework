@@ -229,6 +229,8 @@ int main() {
 
 				dropTable(op.migrationName);
 
+				return 0;
+
 		// 		std::string baseQuery = "DROP TABLE IF EXISTS ";
 		// 		std::string query = baseQuery + op.migrationName;
 
@@ -268,6 +270,8 @@ int main() {
 
 				createTable(op.migrationName,mi.migrationRowName,mi.migrationTypeName);
 
+				return 0;
+
 			}
 
 		}
@@ -297,6 +301,8 @@ int main() {
 
 				insertTable(op.seedName,se.seedRowName,se.seedRowValue);
 
+				return 0;
+
 			}
 
 		}
@@ -318,13 +324,15 @@ int main() {
 		}
 		// end
 
-			if (strcmp(op.comandName, "issuesphp:make:auth") == 0)
+		if (strcmp(op.comandName, "issuesphp:make:auth") == 0)
 		{
 
 			// system("php -S localhost:8080");
 			system("php app/Triggers/user/top.php");
 
-			  
+			return 0;
+
+
 
 		}
 
@@ -355,17 +363,21 @@ int main() {
 
 			// std::cout << finalPath << std::endl;
 
-			FILE *file1 = fopen(finalPath1.c_str(), "w");		
+			FILE *file1 = fopen(finalPath1.c_str(), "w");
+
+			return 0;		
 
 		}
 		// end
 
-	
+
 
 		
 		break;
 	default:
 		printf("No options: \n");
+
+		return 0;	
 	}
 
 
