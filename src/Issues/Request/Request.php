@@ -28,6 +28,18 @@ class Request
 		return null;
 	}
 
+	public static function getGet($key = null) {
+
+		if (!empty($_GET[$key])) {
+
+			$val = htmlspecialchars($_GET[$key]);
+			
+			return $val; 
+		}
+
+		return null;
+	}
+
 
 
 }
